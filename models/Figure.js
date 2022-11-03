@@ -7,7 +7,7 @@ const figure = new mongoose.Schema({
         ref:"categories"
     },
     images:{
-        type:[String],
+        type:[Object],
     },
     origin:{
         type:mongoose.SchemaTypes.ObjectId,
@@ -24,16 +24,20 @@ const figure = new mongoose.Schema({
         required:true,
         ref:"companies"
     },
-    artists:[{
-        type:mongoose.SchemaTypes.ObjectId,
+    artists:{
+        type:[mongoose.SchemaTypes.ObjectId],
         required:true,
         ref:"artists"
-    }],
-    materials:[{
-        type:String,
+    },
+    materials:{
+        type:[String],
         required:true,
         ref:"materials"
-    }],
+    },
+    releases:{
+        type: Date,
+        default: Date.now
+    }
 });
 const Figure = mongoose.model('figures',figure);
 module.exports = Figure;

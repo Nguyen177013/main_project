@@ -2,20 +2,6 @@ const Characters = require('../models/Characters');
 const Origins = require('../models/Origins');
 const multer  = require('multer');
 const path = require('path');
-const storage = multer.diskStorage({
-    destination:(req,file,cb)=>{
-        cb(null,path.join(__dirname, '..','public',"img",'mona'))
-    },
-        filename:(req,file,cb)=>{
-            cb(null,Date.now()+path.extname(file.originalname));
-    },
-});
-const upload = multer({
-    storage:storage,
-    limits:{
-        fileSize: 1024 * 1024 * 25
-    },
-}).array('img',20);
     class CharactersController{
         async indexChar (req,res){
             const characters = await Characters.find().populate('name');

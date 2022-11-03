@@ -1,40 +1,32 @@
 <%-include('../partials/header.ejs')%>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-<link rel="stylesheet" href="./style/Detail.css">
 <%-include('../partials/nav.ejs')%>
+<link rel="stylesheet" href="../style/Detail.css">
 <main>
     <section class="detail_fig detail">
         <div class="container flex_imgs col-2">
-            <a href="./imgs/details/1249991.jpg" class="main_img MagicZoom">
-                <img src="imgs/details/1249991.jpg" alt="">
+            <a href="<%=figure.images[0]%>" class="main_img MagicZoom">
+                <img src="<%=figure.images[0]%>" alt="">
             </a>
             <div class="sub_imgs">
-                <div class="child_img">
-                    <img src="imgs/details/2784766.jpeg" alt="" class="img">
-                </div>
-                <div class="child_img">
-                    <img src="imgs/details/2784768.jpeg" alt="" class="img">
-                </div>
-                <div class="child_img">
-                    <img src="imgs/details/2784772.jpeg" alt="" class="img">
-                </div>
-                <div class="child_img">
-                    <img src="imgs/details/2784765.jpeg" alt="" class="img">
-                </div>
-                <div class="child_img">
-                    <img src="imgs/details/1249991.jpg" alt="" class="img">
-                </div>
+                <%figure.images.forEach(img=>{%>
+                    <div class="child_img">
+                        <img src="<%=img%>" alt="" class="img">
+                    </div>
+                <%})%>
             </div>
         </div>
         <div class="container list_info">
             <div class="detail_fig">
                 <div class="fig_info">
                     <h3>Character</h3>
-                    <a href="">Mona Megistus</a>
+                    <%figure.character.forEach(char=>{%>
+                        <a href=""><%=char.name%></a>
+                    <%})%>
                 </div>
                 <div class="fig_info">
                     <h3>From</h3>
-                    <a href="">Genshin Impact</a>
+                        <a href=""><%=figure.origin.name%></a>
                 </div>
                 <div class="fig_info">
                     <h3>Follows</h3>
@@ -44,14 +36,24 @@
             <div class="detail_fig mt col">
                 <div class="about_fig">
                     <ul class="list_info">
-                        <li><strong>Category </strong>: <a href="">Prepainted</a></li>
-                        <li><strong>Companies</strong>: <a href="">Good Smile Company As Distributor</a>,<a
-                                href="">Wonderful Works As Manufacturer</a></li>
-                        <li><strong>Artists</strong>: <a href="">Michikawa HiroshiMichikawa Hiroshi As Color
-                                producer</a>,<a href="">Sakaki Kaoru As Sculptor</a></li>
+                        <li><strong>Category </strong>: <a href=""><%=figure.category.name%></a></li>
+                        <li><strong>Companies</strong>: 
+                            <%figure.company.forEach(comp=>{%>
+                                <a href="<%=comp.Homepage%>"><%=comp.name%></a>
+                                <%})%>
+                            </li>
+                        <li><strong>Artists</strong>:
+                            <%figure.artists.forEach(art=>{%>
+                                <a href="<%=art.Homepage%>"><%=art.name%></a>
+                                <%})%>
+                            </li>
                         <li><strong>Version</strong>: <a href="">Astral Reflection Ver</a></li>
                         <li><strong>Releases</strong>: <a href="">10/27/2022 As Standard</a></li>
-                        <li><strong>Materials</strong>: <a href="">ABS, PVC</a></li>
+                        <li><strong>Materials</strong>: 
+                            <%figure.materials.forEach(mt=>{%>
+                                <a href=""><%=mt.name%></a>
+                                <%})%>
+                        </li>
                         <li><strong>Dimensions</strong>: <a href="">1/7 W=187mm (7.29in) L=160mm (6.24in) H=247mm
                                 (9.63in, 1:1=1.73m)</a></li>
                     </ul>

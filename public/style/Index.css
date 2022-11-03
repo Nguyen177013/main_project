@@ -277,6 +277,7 @@ section{
 }
 section .container{
     margin: 120px;
+    width: 100%;
 }
 section h1{
     font-size: 60px;
@@ -312,8 +313,11 @@ section .text-card{
     z-index: -1;
 }
 .about_fig{
+    text-align: center;
+    width: 100%;
     position: absolute;
     bottom: 0;
+    left: 0;
     color: #fff;
     opacity: 0;
     transition: all 1s;
