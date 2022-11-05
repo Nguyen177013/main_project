@@ -4,7 +4,7 @@ const Categories = require('../models/Categories');
 const Characters = require('../models/Characters');
 const Companies = require('../models/Companys');
 const Materials = require('../models/materials');
-const Origins = require('../models/Origins')
+const Origins = require('../models/Origins');
 const path = require('path');
 
 class FigureController{
@@ -17,7 +17,6 @@ class FigureController{
         const figure = await Figure.findById(fig_id).populate('category')
         .populate('artists').populate('character')
         .populate('origin').populate('company').populate('materials');
-        console.log(figure);
         res.render('Home/detail',{title:"detail",figure:figure});
     }
 }

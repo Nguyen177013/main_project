@@ -7,7 +7,7 @@ const figure = new mongoose.Schema({
         ref:"categories"
     },
     images:{
-        type:[Object],
+        type:[String],
     },
     origin:{
         type:mongoose.SchemaTypes.ObjectId,

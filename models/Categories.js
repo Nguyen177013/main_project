@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const categories = new mongoose.Schema({
-    name:String
+    name:String,
 });
 const cateSchema = mongoose.model('categories', categories);
 
