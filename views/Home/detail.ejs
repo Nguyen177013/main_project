@@ -43,7 +43,13 @@
                                 <%})%>
                             </li>
                         <li><strong>Version</strong>: <a href="">Astral Reflection Ver</a></li>
-                        <li><strong>Releases</strong>: <a href="">10/27/2022 As Standard</a></li>
+                        <li><strong>Releases</strong>:<%figure.release_date.forEach((day,index)=>{%>
+                            <%if(index==figure.release_date.length-1){%>                              
+                                <a><%=day%> as Standard</a>,
+                                <%}else{%>
+                                    <a><%=day%></a>,
+                                <%}%>
+                            <%})%></li>
                         <li><strong>Materials</strong>: 
                             <%figure.materials.forEach(mt=>{%>
                                 <a href="/material/<%=mt._id%>"><%=mt.name%></a>,

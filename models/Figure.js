@@ -34,8 +34,8 @@ const figure = new mongoose.Schema({
         required:true,
         ref:"materials"
     },
-    releases:{
-        type: Date,
+    release_date:{
+        type: [String],
         default: Date.now
     }
 });
