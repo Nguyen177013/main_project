@@ -1,7 +1,7 @@
         $(document).ready(function(){
             $('.cards').slick({
                 infinite: true,
-                slidesToShow: 3,
+                slidesToShow: 4,
                 slidesToScroll: 1,        
                 swipeToSlide: true,
                 centerMode: false,

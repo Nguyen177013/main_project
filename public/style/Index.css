@@ -302,7 +302,8 @@ section .cards{
     cursor: pointer;
     font-weight: 800;
 }
-section .text-card{
+section .text-card,
+.more{
     position: relative;
     padding: 20px;
     margin: 20px;
@@ -311,6 +312,20 @@ section .text-card{
     border-radius: 16px;
     overflow: hidden;
     z-index: -1;
+}
+.more{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+.more{
+    text-decoration: none;
+    color: #000;
+    transition: all .2s;
+}
+.more:hover{
+    text-decoration: underline;
+    transform: translateY(-10px);
 }
 .about_fig{
     text-align: center;

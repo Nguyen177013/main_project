@@ -27,6 +27,27 @@
         <section id="main_content">
             <div class="container reveal">
                 <h2>Latest Additions</h2>
+                <div class="cards" >
+                    <%figures.forEach(figure=>{%>
+                        <a href="/figure/<%=figure._id%>" class="text-card" style="background-image: url('<%=figure.images[0]%>');background-size: cover;
+                        background-repeat: no-repeat;">
+                            <div class="about_fig">
+                                <h3>Title</h3>
+                                <p><%=figure.name%></p>
+                                 </div>
+                        </a>
+                    <%})%>
+                    <%if(figures.length>=5){%>
+                        <a href="" class="more" >
+                            <h3>View More</h3>
+                        </a>
+                    <%}%>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container reveal">
+                <h2>This Month Releases</h2>         
                 <div class="cards">
                     <%figures.forEach(figure=>{%>
                         <a href="/figure/<%=figure._id%>" class="text-card" style="background-image: url('<%=figure.images[0]%>');background-size: cover;
@@ -37,42 +58,11 @@
                                  </div>
                         </a>
                     <%})%>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="container reveal">
-                <h2>This Month Releases</h2>
-                
-                <div class="cards">
-                    <a href="#" class="text-card" style="background-image: url('../imgs/1.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a>
-                    <a href="#" class="text-card" style="background-image: url('../imgs/2.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a> 
-                    <a href="#" class="text-card" style="background-image: url('../imgs/3.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                       <div class="about_fig">
-                           <h3>Title</h3>
-                           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                            </div>
-                    </a>
-                    <a href="#" class="text-card" style="background-image: url('../imgs/4.jpg');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a>
+                    <%if(figures.length>=5){%>
+                        <a href="" class="more" >
+                            <h3>View More</h3>
+                        </a>
+                    <%}%>
                 </div>
             </div>
         </section>
@@ -80,38 +70,23 @@
             <div class="container reveal">
                 <h2>Items on Fire</h2>
                 <div class="cards">
-                    <a href="#" class="text-card" style="background-image: url('../imgs/1.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a>
-                    <a href="#" class="text-card" style="background-image: url('../imgs/2.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a> 
-                    <a href="#" class="text-card" style="background-image: url('../imgs/3.png');background-size: cover;
-                    background-repeat: no-repeat;">
-                       <div class="about_fig">
-                           <h3>Title</h3>
-                           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                            </div>
-                    </a>
-                    <a href="#" class="text-card" style="background-image: url('../imgs/4.jpg');background-size: cover;
-                    background-repeat: no-repeat;">
-                        <div class="about_fig">
-                            <h3>Title</h3>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-                             </div>
-                    </a>
+                    <%figures.forEach(figure=>{%>
+                        <a href="/figure/<%=figure._id%>" class="text-card" style="background-image: url('<%=figure.images[0]%>');background-size: cover;
+                        background-repeat: no-repeat;">
+                            <div class="about_fig">
+                                <h3>Title</h3>
+                                <p><%=figure.name%></p>
+                                 </div>
+                        </a>
+                    <%})%>
+                    <%if(figures.length<=5){%>
+                        <a href="" class="more" >
+                            <h3>View More</h3>
+                        </a>
+                    <%}%>
                 </div>
             </div>
         </section>
     </main>
-    <script>let size = '<%=figures.length%>'
     </script>
     <%-include('../partials/footer_main.ejs')%>

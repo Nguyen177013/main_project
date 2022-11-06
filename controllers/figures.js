@@ -19,6 +19,11 @@ class FigureController{
         .populate('origin').populate('company').populate('materials');
         res.render('Home/detail',{title:"detail",figure:figure});
     }
+    async itemFigure(req,res){
+        const figure = await Figure.find();
+        console.log(figure);
+        res.render('Figure/items',{figures: figure,status:'fire'});
+    }
 }
 
 module.exports = new FigureController;
