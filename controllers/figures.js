@@ -21,7 +21,6 @@ class FigureController{
     }
     async itemFigure(req,res){
         const figure = await Figure.find();
-        console.log(figure);
         res.render('Figure/items',{figures: figure,status:'fire'});
     }
 }

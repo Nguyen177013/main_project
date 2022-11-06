@@ -37,5 +37,6 @@ app.use('/figure', router.home);
 app.use('/character', router.character);
 app.use('/origin', router.origin);
 app.use('/artist', router.artist);
+app.use('/category',router.category);
 app.use('/material', router.material);
 

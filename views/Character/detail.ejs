@@ -27,8 +27,8 @@
                 <div class="fig_info bl">
                     <ul class="info">
                         <li><strong>Character: </strong> <span><%=character.name%> </span></li>
-                        <li><strong>Original Name: </strong><span><%=character.original%></span></li>
-                        <li><strong>From: </strong><span><%=figures[0].origin.name%></span></li>
+                        <li><strong>Original Name: </strong><span><%=character?.original%></span></li>
+                        <li><strong>From: </strong><span><%=figures[0]?.origin.name%></span></li>
                         <li><strong>Companies Involve: 
                             <div class="compimgs">
                                 <%company.forEach(com=>{%>

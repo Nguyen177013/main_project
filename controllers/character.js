@@ -5,6 +5,10 @@ const company = require('../models/Companys');
 const mongoose = require('mongoose');
 const companyController = require('../controllers/company')
 class characterController{
+    async character_index(req,res){
+        const characters = await character.find();
+        res.render('Character/index',{characters: characters});
+    }
     async Character_get(req,res){
         const charId = req.params.id;
         const detail = await character.findById(charId);

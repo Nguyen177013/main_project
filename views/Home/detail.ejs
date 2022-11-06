@@ -36,7 +36,7 @@
             <div class="detail_fig mt col">
                 <div class="about_fig">
                     <ul class="list_info">
-                        <li><strong>Category </strong>: <a href=""><%=figure.category.name%></a></li>
+                        <li><strong>Category </strong>: <a href="/category/<%=figure.category._id%>"><%=figure.category.name%></a></li>
                         <li><strong>Artists</strong>:
                             <%figure.artists.forEach(art=>{%>
                                 <a href="/artist/<%=art._id%>"><%=art.name%></a>,
