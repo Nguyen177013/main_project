@@ -28,6 +28,7 @@ app.get('/',(req,res)=>{
     res.redirect('/figure');
 });
 // Dinamic Router
+app.use('/signup',router.signin);
 app.use('/figure',router.home);
 app.use('/character',router.character);
 app.use('/origin',router.origin);

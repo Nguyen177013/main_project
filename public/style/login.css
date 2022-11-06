@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+    scroll-behavior: smooth;
+}
+body,html{
+    height: 100vh;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1D212B;
+}
+.login_form{
+    background-color: #fff;
+    width: 28rem;
+    height: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    animation-name: lift-up;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.user_form{
+    margin: 10px 0;
+}
+input{
+    border: none;
+    width: 15rem;
+    padding: 10px 15px;
+}
+input:focus{
+    outline: none;
+}
+.user_form{
+    text-align: center;
+    margin-top: 28px;
+    position: relative;
+}
+.user_form .text{
+    width: 18rem;
+    height: 2.5rem;
+    border-radius: 2px;
+    border: 0.5px solid #ccc;
+    font-weight: bolder;
+    color: #000;
+    transition: all 0.3s ease;
+}
+.user_form label{
+    position: absolute;
+    color: #ccc;
+    width: 71%;
+    top: 8px;
+    left: -40px;
+    font-weight: bolder;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+.user_form .text:focus{
+    border: 0.5px solid #1D212B;
+    font-weight: 400;
+}
+.user_form .text:focus + label,
+.user_form .text:valid + label{
+    width: 6.5rem;
+    transform: translate(50px, -18px);
+    font-size: 12px;
+    border-left: 1px solid  #1D212B ;
+    border-right: 1px solid  #1D212B ;
+    letter-spacing: 0.5px;
+    background-color: #fff;
+}
+.login_btn{
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 12rem;
+}
+.login_btn button{
+    border: none;
+    background-color: #1D212B;
+    color: #fff;
+    padding: 5px 15px;
+    width: 12rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.login_btn button:hover{
+    background-color: #14171e78;
+}
+.forgot_pass{
+    float: right;
+}
+.register {
+    float: left;
+}
+.forgot_pass a,
+.register a{
+    text-decoration: none;
+    font-size: 14px;
+}
+.login_option{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.options{
+    display: inline-block;
+    margin: 25px 10px;
+}
+.option_img{
+    height: 30px;
+    width: 30px;
+}
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
