@@ -93,3 +93,19 @@
         height: 100%;
     }
 }
+@keyframes show_toast{
+    from{
+        opacity: 0;
+        transform: translateX(405px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+}
+@keyframes hide_toast {
+    to{
+        opacity: 0;
+    }
+}

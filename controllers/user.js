@@ -1,4 +1,4 @@
-
+const Account = require('../models/account');
 class userController{
     login_get(req,res){
         res.render('Login/login')
@@ -10,10 +10,19 @@ class userController{
     login_post(req,res){
 
     }
-    register_post(rep,res){
-
+    async register_post(req,res){
+        try{
+            let data = req.body;
+            console.log(data);
+            const user = await Account.create(data);
+            res.status(201).json({user:user._id});
+        }
+        catch(ex){
+            console.log(ex.message);
+        }
     }
     forgot_get(req, res) { res.render('Login/forgot-password') };
+
     async forgot_post(req, res) {
                 const { email } = req.body
                 const { password } = req.body

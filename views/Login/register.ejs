@@ -1,4 +1,7 @@
 <%-include('../partials/login_header.ejs')%>
+<div id="toast">
+
+</div>
 <main>
     <div class="login_form">
         <div class="login_title">
@@ -7,12 +10,20 @@
         <div class="content">
             <form class="login">
                 <div class="user_form">
-                    <input type="text" class="text" required>
+                    <input type="text" class="text" name="username" autocomplete="off"  required>
                     <label for="text">Username</label>
                 </div>
                 <div class="user_form">
-                    <input type="password" class="text" required>
+                    <input type="text" class="text" name="email" autocomplete="off"  required>
+                    <label for="text">Email</label>
+                </div>
+                <div class="user_form">
+                    <input type="password" class="text" name="password" required>
                     <label for="text">Password</label>
+                </div>
+                <div class="user_form">
+                    <input type="password" class="text" name="confirm_password" required>
+                    <label for="text">Confirm password</label>
                 </div>
                 <div class="register">
                     <a href="/signup/login">Login</a>
@@ -46,4 +57,36 @@
         </div>
     </div>
 </main>
+<script src="/script/ToastEvent.js"></script>
+<script>
+        let form = document.querySelector('form');
+        form.addEventListener('submit', async function(e){
+            e.preventDefault();
+            let username = form.username.value;
+            let email = form.email.value;
+            let password = form.password.value;
+            let confirm_password = form.confirm_password.value
+            if(password !== confirm_password){
+                toastHandle('Warning','warning','confirm password not match');
+                return;
+            }
+            try{
+                const res = await fetch('/signup/register',{
+                    method:'POST',
+                    body: JSON.stringify({username,email,password}),
+                    headers:{'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                if(!data.user){
+                    toastHandle('Error','error','Server cannot create your account. Please try again');
+                }
+                else{
+                    toastHandle('Your User Id','success',data.user);
+                }
+            }
+            catch(ex){
+                console.log(ex);
+            }
+        })
+</script>
 <%-include('../partials/footer.ejs')%>
