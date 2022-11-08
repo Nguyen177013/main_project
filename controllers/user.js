@@ -7,20 +7,76 @@ class userController{
         res.render('Login/register')
     }
 
-    login_post(req,res){
+    login_post(req, res) {
+        var username = req.body.username
+        var password = req.body.password
+        AccountModel.findOne({
+            username: username,
+            password: password
+        }).then(data => {
+            if (data) {
+                var token = jwt.sign({
+                    _id: data._id
+                }, 'password')
+                return res.json({
+                    message: "Login Successful",
+                    token: token
+                })
+            }
+            console.log('sdadada');
+            res.json({ message: "Login Complete!" })
 
+        }).catch(data => {
+            res.status(300).json("Wrong")
+        })
     }
-    async register_post(req,res){
-        try{
-            let data = req.body;
-            console.log(data);
-            const user = await Account.create(data);
-            res.status(201).json({user:user._id});
-        }
-        catch(ex){
-            console.log(ex.message);
-        }
+    register_post(req, res, next) {
+        var username = req.body.username
+        var email = req.body.email
+        var password = req.body.password
+
+
+        console.log(username);
+        console.log(email);
+        console.log(password);
+        AccountModel.findOne({
+                username: username
+            })
+            .then(data => {
+                if (data) {
+                    res.json('Username đã tồn tại')
+                } else {
+                    return AccountModel.create({
+                        username: username,
+                        email: email,
+                        password: password
+                    }).then(data => {
+                        console.log(data);
+                    })
+                }
+            })
+            // .then(data => {
+            //     console.log("Complete");
+            //     // return.json
+            //     console.log(data);
+            // })
+            .catch(Error => {
+                console.log(Error);
+                res.status(500).json('Tạo tài khoản thất bại')
+            })
     }
+//     async register_post(req,res){
+//         try{
+//             let data = req.body;
+//             console.log(data);
+//             const user = await Account.create(data);
+//             res.status(201).json({user:user._id});
+//         }
+//         catch(ex){
+//             console.log(ex.message);
+//         }
+//     }
+    
     forgot_get(req, res) { res.render('Login/forgot-password') };
 
     async forgot_post(req, res) {
