@@ -77,6 +77,10 @@
                     headers:{'Content-Type': 'application/json'}
                 });
                 const data = await res.json();
+                if(data?.err){
+                    toastHandle('Warning','warning',`Please enter ${data.err.email} ${data.err.username} ${data.err.password}`);        
+                    return;
+                }
                 if(!data.user){
                     toastHandle('Error','error','Server cannot create your account. Please try again');
                 }

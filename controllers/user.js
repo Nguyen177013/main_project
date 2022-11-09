@@ -1,4 +1,12 @@
 const Account = require('../models/account');
+const handleError = require('../middleware/handleError');
+const jwt = require('jsonwebtoken');
+
+const createToken = (id)=>{
+    const maxAge = 3 * 24 * 60 *60;
+    return jwt.sign({id},'Hutech',{expiresIn:maxAge})
+}
+const maxAge = 3 * 24 * 60 *60;  // 3 ngày
 class userController{
     login_get(req,res){
         res.render('Login/login')
@@ -6,19 +14,31 @@ class userController{
     register_get(rep,res){
         res.render('Login/register')
     }
-
-    login_post(req,res){
-
+    async login_post(req,res){
+        let username = req.body.username;
+        let password = req.body.password;
+        try{
+            const user = await Account.login(username,password);
+            const token = createToken(user._id);
+            console.log(user);
+            console.log('this is token', token);
+            res.cookie('user',token,{httpOnly:true,maxAge:maxAge*1000});
+            res.status(201).json({user:user.username});
+        }
+        catch(ex){
+            let err = handleError(ex);
+            res.status(401).json({err});
+        }
     }
     async register_post(req,res){
         try{
             let data = req.body;
-            console.log(data);
             const user = await Account.create(data);
             res.status(201).json({user:user._id});
         }
         catch(ex){
-            console.log(ex.message);
+            let err = handleError(ex);
+            res.status(401).json({err});
         }
     }
     forgot_get(req, res) { res.render('Login/forgot-password') };

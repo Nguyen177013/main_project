@@ -6,20 +6,21 @@ const Schema = mongoose.Schema;
 const AccountSchema = new Schema({
     username:{
         type:String,
-        required:true,
-        minlength: [3,'please enter a valid password']
+        required:[true,'username'],
+        minlength: [3,'valid user name'],
+        unique: true
     },
     email: {
         type: String,
-        required: true,
+        required: [true,'email'],
         lowercase: true,
         unique: true,
-        validate:[isEmail,'please enter a valid email'],
+        validate:[isEmail,'valid email'],
     },
     password:{
         type:String,
-        required:true,
-        minlength: [3,'please enter a valid password']
+        required:[true,'password'],
+        minlength: [3,'valid password']
     },
     image:{
             id:String,
@@ -31,6 +32,23 @@ AccountSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, salt)
     next();
 })
+AccountSchema.statics.login = function(username, password) {
+    let data = this.findOne({
+        username: username,
+    }).then(async data => {
+        if(data){
+            const checkPassword = await bcrypt.compare(password,data.password)
+            if (checkPassword) {
+                return data;
+            }
+            else
+            throw Error('Password');
+        }
+        else
+        throw Error('User');
+    })
+    return data;
+}
 
 const AccountModel = mongoose.model('account', AccountSchema)
 module.exports = AccountModel

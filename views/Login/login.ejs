@@ -1,4 +1,7 @@
 <%-include('../partials/login_header.ejs')%>
+<div id="toast">
+
+</div>
 <main>
     <div class="login_form">
         <div class="login_title">
@@ -7,11 +10,11 @@
         <div class="content">
             <form class="login">
                 <div class="user_form">
-                    <input type="text" class="text" required>
+                    <input type="text" class="text" name="username" required>
                     <label for="text">Username</label>
                 </div>
                 <div class="user_form">
-                    <input type="password" class="text" required>
+                    <input type="password" class="text" name="password" required>
                     <label for="text">Password</label>
                 </div>
                 <div class="register">
@@ -49,4 +52,38 @@
         </div>
     </div>
 </main>
+<script src="/script/ToastEvent.js"></script>
+<script>
+    let form = document.querySelector('form');
+    form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        let username = form.username.value;
+        let password = form.password.value;
+        try{
+            const res = await fetch('/signup/login',{
+                method:'POST',
+                body: JSON.stringify({username,password}),
+                headers:{'Content-Type': 'application/json'}
+            });
+            const data = await res.json();
+            console.log(data);
+            if(data?.err){
+                    toastHandle('Warning','warning',`${data.err.email} ${data.err.username} ${data.err.password}`);        
+                    return;
+                }
+            if(!data.user){
+                toastHandle('Error','error','Server cannot create your account. Please try again');
+            }
+            else{
+                setTimeout(function(){
+                    window.location.assign('/');
+                },2000)
+                toastHandle('Login success','success',`Hello ${data.user}`);
+            }
+        }
+        catch(ex){
+            console.log(ex);
+        }
+    })
+</script>
 <%-include('../partials/footer.ejs')%>
