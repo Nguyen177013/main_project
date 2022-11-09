@@ -7,9 +7,27 @@ class userController{
         res.render('Login/register')
     }
 
-    login_post(req,res){
+    login_post(req, res) {
+        var username = req.body.username
+        var password = req.body.password
+        AccountModel.findOne({
+            username: username,
+            password: password
+        }).then(data => {
+            if (data) {
+                var token = jwt.sign({
+                    _id: data._id
+                }, 'password')
+                return res.json({
+                    message: "Login Successful",
+                    token: token
+                })
+            }
+            res.json({ message: "Login Complete!" })
 
-    }
+        }).catch(data => {
+            res.status(300).json("Wrong")
+        })
     async register_post(req,res){
         try{
             let data = req.body;
