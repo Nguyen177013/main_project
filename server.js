@@ -7,6 +7,8 @@ const port = process.env.PORT || 3000;
 const router = require('./routers/main');
 const connectMongo = require('./db/connectDB');
 const path = require('path');
+const cookieParser = require('cookie-parser')
+const {checkUser,requireAuth} = require('./middleware/authorization');
 // mongoodb connection
     try {
         connectMongo();
@@ -22,12 +24,15 @@ const path = require('path');
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 // Set up static routers
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname,'public', 'imgs')));
 // Set up views Engine
 app.set('view engine', 'ejs');
 // Local Router
+app.get('*',checkUser);
 app.get('/', (req, res) => {
     res.redirect('/figure');
 });

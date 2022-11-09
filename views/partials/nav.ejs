@@ -1,3 +1,4 @@
+    <script defer src="/script/loginEvent.js"></script>
 <header>
     <div class="container">
         <div class="header_logo"><a href="/">Figure <span>Database</span></a></div>
@@ -21,9 +22,41 @@
                 </div>
             </div>
         </div>
+        <%if(!user){%>
+            <div class="header_login">
+                <a href="/signup/login" href="">Login</a>
+                <a href="/signup/register" href="">Register</a>
+            </div>
+        <%}else{%>
         <div class="header_login">
-            <a href="/signup/login" href="">Login</a>
-            <a href="/signup/register" href="">Register</a>
+            <input type="checkbox">
+            <div class="user_img">
+                <%if(user.img_url){%>
+                    <%}else{%>
+                        <img src="/detail/unknow.png" alt="">
+                <%}%>
+            </div>
         </div>
+        <div class="form_user user_detail">
+            <div class="user_menu">
+                <a href="" class="user_img">
+                    <%if(user.img_url){%>
+                        <%}else{%>
+                            <img src="/detail/unknow.png" alt="">
+                    <%}%>
+                </a>
+                <div class="user_name">
+                    <a href=""><%=user.username%></a>
+                </div>
+            </div>
+            <div class="user_logout">
+                <div class="logout_btn">
+                    <a href="/signup/logout">
+                        <button>Logout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <%}%>
     </div>
 </header>
