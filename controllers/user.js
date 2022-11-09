@@ -45,5 +45,44 @@ class userController{
                 console.log(link);
                 res.send('Mã reset mật khẩu đã được gửi vào email...')
             }
+    //-------------------------
+    reset_get(req, res, next) {
+        res.render('Login/reset')
+            //
+            //
+        const { _id, token } = req.params;
+        if (_id !== UserID._id) {
+            res.send('Invalid id.....')
+            return
+        } else {
+            const secret = JWT_SECRET + Userpass.password
+            try {
+                const payload = jwt.verify(token, secret)
+                res.render('reset-password', { email: UserEmail.email })
+            } catch (error) {
+                console.log(error.message);
+                res.send(error.message);
+            }
+        }
+    }
+    reset_post(req, res, next) {
+        res.render('Login/reset')
+            ////
+        const { _id, token } = req.params;
+        const { password, password2 } = req.body;
+        if (_id !== UserID._id) {
+            res.send('Invalid Id......');
+            return;
+        }
+        const secret = JWT_SECRET + Userpass.password
+        try {
+            const payload = jwt.verify(token, secret)
+            Userpass.password = password
+            res.send(AccountModel)
+        } catch (error) {
+            console.log(error.message);
+            res.render(error.message)
+        }
+    }
 }
 module.exports = new userController;
