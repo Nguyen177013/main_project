@@ -1,4 +1,4 @@
-    <script defer src="/script/loginEvent.js"></script>
+<script defer src="/script/loginEvent.js"></script>
 <header>
     <div class="container">
         <div class="header_logo"><a href="/">Figure <span>Database</span></a></div>
@@ -21,11 +21,15 @@
                     <a href="/artist">Artist</a>
                 </div>
             </div>
+            <div class="find">
+                <form action="/figure/find">
+                    <input type="text" name="name">
+                </form>
+            </div>
         </div>
         <%if(!user){%>
             <div class="header_login">
                 <a href="/signup/login" href="">Login</a>
-                <a href="/signup/register" href="">Register</a>
             </div>
         <%}else{%>
         <div class="header_login">

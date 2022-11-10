@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const router = require('./routers/main');
 const connectMongo = require('./db/connectDB');
 const path = require('path');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const {checkUser,requireAuth} = require('./middleware/authorization');
 // mongoodb connection
     try {
@@ -21,7 +21,7 @@ const {checkUser,requireAuth} = require('./middleware/authorization');
     }
 // ----------------------
 // Set up middleware
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
     res.redirect('/figure');
 });
 // Dinamic Router
+app.use('/favorate',router.favorate);
 app.use('/signup', router.signin);
 app.use('/figure', router.home);
 app.use('/character', router.character);

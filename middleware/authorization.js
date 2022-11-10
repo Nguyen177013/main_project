@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/account');
 const requireAuth = (req, res, next) => {
-  console.log(req?.cookies)
-  const token = req?.cookies?.jwt;
+  const token = req?.cookies?.user;
   if (token) {
     jwt.verify(token, 'Hutech', (err, decoded) => {
       if (err) {
-        res.redirect('/login');
+        console.log('this is err: ',err);
+        res.json({login:2});
       }
       else {
         next();
@@ -14,7 +14,7 @@ const requireAuth = (req, res, next) => {
     })
   }
   else {
-    res.redirect('/login');
+    res.json({login:1});
   }
 }
 

@@ -34,8 +34,9 @@ const figure = new mongoose.Schema({
         required:true,
         ref:"materials"
     },
+    price:String,
     release_date:{
-        type: [String],
+        type: [Date],
         default: Date.now
     }
 });

@@ -3,7 +3,17 @@ const favorate = new mongoose.Schema({
     figure:{
         type:mongoose.SchemaTypes.ObjectId,
         required:true,
+        ref:'figures'
+    },
+    user:{
+        type:mongoose.SchemaTypes.ObjectId,
+        required:true,
+        ref:'accounts'
+    },
+    dayfollow:{
+        type: Date,
+        default:Date.now
     }
 });
-const materialSchema  =  mongoose.model('materials', material);
-module.exports = materialSchema;
+const favorateSchema  =  mongoose.model('favorate', favorate);
+module.exports = favorateSchema;

@@ -29,8 +29,8 @@
                         <a href="/origin/<%=figure.origin._id%>"><%=figure.origin.name%></a>
                 </div>
                 <div class="fig_info">
-                    <h3>Follows</h3>
-                    <a href="">792 likes</a>
+                    <h3>Viewer</h3>
+                    <a href=""><%=views%></a>
                 </div>
             </div>
             <div class="detail_fig mt col">
@@ -58,6 +58,13 @@
                         <li><strong>Dimensions</strong>: <a href="">1/7 W=187mm (7.29in) L=160mm (6.24in) H=247mm
                                 (9.63in, 1:1=1.73m)</a></li>
                     </ul>
+                </div>
+            </div>
+            <div class="detail_fig mt">
+                <div class="follow_btn">
+                    <div class="follow">
+                        <span>Follow</span> <span class="total"><%=favorate%></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -183,5 +190,29 @@
 <script>
     CKEDITOR.config.toolbarCanCollapse = true;
     CKEDITOR.replace('body',{})
+</script>
+<script>
+    let followBtn = document.querySelector('.follow');
+    let totalFollow = document.querySelector('.total');
+    followBtn.addEventListener('click', async function(e){
+        let figId = '<%=figure.id%>';
+        let user = '<%=user?.id%>';
+        let res = await fetch('/favorate/add',{
+                method:'POST',
+                body: JSON.stringify({figId,user}),
+                headers:{'Content-Type': 'application/json'}
+            })
+            const data = await res.json();
+            console.log(data);
+            if(data.login){
+                window.location.href = '/signup/login';
+            }
+            if(data.add){
+                totalFollow.innerHTML = parseInt('<%=favorate%>')+1;
+            }
+            if(data.remove){
+                totalFollow.innerHTML = parseInt('<%=favorate%>');
+            }
+    })
 </script>
 <%-include('../partials/footer.ejs')%>

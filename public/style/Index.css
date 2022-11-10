@@ -77,69 +77,6 @@ header .container::before{
     animation-name: slide-up;
     animation-duration: 1.5s;
 }
-.header_login{
-    position: relative;
-}
-.header_login input{
-    display: none;
-}
-.user_detail{
-    opacity: 0;
-    display: none;
-    transition: all 3s;
-}
-.show_user{
-    opacity: 1;
-}
-.user_img{
-    width: 32px;
-    margin: 5px 0;
-    cursor: pointer;
-}
-.user_img img{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-.form_user{
-    position: absolute;
-    right: 0;
-    top: 64px;
-    background-color: #1D212B;
-    width: 20rem;
-    border-radius: 8px;
-    transition: 0.2s;
-    border: 1px solid #1D212B;
-}
-.user_img img:hover{
-    opacity: 0.5;
-}
-.user_menu{
-    margin-left: 10px;
-    display: flex !important;
-    align-items: center;
-}
-.user_name{
-    margin-left: 10px;
-}
-.user_logout{
-    width: 100%;
-}
-.logout_btn{
-    float: right;
-    margin-right: 25px;
-}
-.logout_btn button{
-    border: none;
-    width: 10rem;
-    height: 1.2rem;
-    background-color: #fff;
-    color: #1D212B;
-    height: 25px;
-    cursor: pointer;
-    border-radius:5px;
-}
 .header_logo, .footer-logo{
     text-transform: uppercase;
     font-size: 20px;
@@ -166,6 +103,7 @@ header .container::before{
     animation-duration: 1s;
     animation-delay: 0.2s;
     animation-fill-mode: forwards; 
+    display: flex !important;
 }
 .nav_menu{
     width: 8rem;

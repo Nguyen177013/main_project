@@ -6,17 +6,23 @@ function reveal(){
     let headerlogo = document.querySelector('.header_logo a');
     let headerMenu = document.querySelector('.header_menu');
     let headerLogin = document.querySelector('.header_login');
+    let userDetail = document.querySelector('.user_detail');
     if(top >=11.686957359313965){
         headerContainer.classList.add('scrollPos');
+        if(userDetail)
+        userDetail.classList.add('scrollPos');
         headerlogo.classList.add('scroll_logo');
         headerMenu.classList.add('scroll_color');
         headerLogin.classList.add('scroll_color');
     }
     else{
         headerContainer.classList.remove('scrollPos');
+        if(userDetail)
+        userDetail.classList.remove('scrollPos');
         headerlogo.classList.remove('scroll_logo');
         headerMenu.classList.remove('scroll_color');
         headerLogin.classList.remove('scroll_color');
+
     }
     let reveals = document.querySelectorAll('.reveal');
     for(let reveal of reveals){

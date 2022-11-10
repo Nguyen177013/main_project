@@ -5,6 +5,7 @@ const artist = require('./artist');
 const material = require('./material');
 const category = require('./category');
 const signin = require('./user');
+const favorate = require('./favorate');
 module.exports = {
     home,
     character,
@@ -12,5 +13,6 @@ module.exports = {
     artist,
     material,
     category,
-    signin
+    signin,
+    favorate
 };

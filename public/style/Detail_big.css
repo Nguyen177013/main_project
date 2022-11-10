@@ -19,7 +19,7 @@ header{
     transition: all 0.4s;
 }
 .scrollPos{
-    background-color: #fff;
+    background-color: #fff !important;
 }
 .scroll_color a,
 .scroll_logo,
@@ -103,6 +103,7 @@ header .container::before{
     animation-duration: 1s;
     animation-delay: 0.2s;
     animation-fill-mode: forwards; 
+    display: flex !important;
 }
 .nav_menu{
     width: 8rem;
@@ -257,11 +258,16 @@ section .container{
     color: #000;
     text-decoration: none;
 }
-/* .fig_info:nth-child(1),
-.fig_info:nth-child(2){
-    border-right: 1px solid #ccc;
-    flex: 1;
-} */
+.follow_btn{
+    margin-left: auto;
+}
+.follow{
+    padding: 8px 30px;
+    background: #e81313;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
 .list_info{
     list-style-type: none;
     display: flex;
@@ -395,12 +401,6 @@ img{
 }
 .user_name{
     display: flex;
-}
-.user_img{
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    overflow: hidden;
 }
 .mr{
     margin-right: 10px;
