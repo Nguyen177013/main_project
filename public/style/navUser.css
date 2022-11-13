@@ -87,12 +87,13 @@
 
 .user_detail {
     opacity: 0;
-    display: none;
+    display: none !important;
     transition: all 3s;
 }
 
 .show_user {
     opacity: 1;
+    display: inline-block !important;
 }
 
 .user_img {

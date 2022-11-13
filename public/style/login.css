@@ -132,6 +132,15 @@ input:focus{
 .login_btn button:hover{
     background-color: #14171e78;
 }
+.forgot_pass a, .register a{
+    color: #000;
+    transition: all .2s;
+}
+.forgot_pass a:hover, .register a:hover{
+    color: #000;
+    font-weight: 600;
+}
+
 .forgot_pass{
     float: right;
 }

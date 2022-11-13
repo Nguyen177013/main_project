@@ -1,9 +1,11 @@
 // Set up Engine-------------
 const express = require('express');
 const http = require('http');
-const morgan = require('morgan');
 const session  = require('express-session');
 const app = express();
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 const port = process.env.PORT || 3000;
 const router = require('./routers/main');
 const connectMongo = require('./db/connectDB');
@@ -14,7 +16,7 @@ const passport = require('passport');
 // mongoodb connection
     try {
         connectMongo();
-        app.listen(port, () => {
+        server.listen(port, () => {
             console.log('server listening on port ' + port);
         });
     }
@@ -23,7 +25,6 @@ const passport = require('passport');
     }
 // ----------------------
 // Set up middleware
-// app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname,'public', 'imgs')));
 // Set up views Engine
 app.set('view engine', 'ejs');
+app.set('io',io);
 // Local Router
 app.get('*',checkUser);
 app.get('/', (req, res) => {

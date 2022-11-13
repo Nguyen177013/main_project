@@ -11,6 +11,8 @@ const Favorate = require('./favorate');
 const moment = require("moment");
 class FigureController{
     async index (req,res){
+        let io = req.app.get('io');
+        io.on('connection', socket => {})
         const latest = await Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
         const thisMonth = await Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
         res.render('Home/index',{figures:latest,thisMonth:thisMonth});

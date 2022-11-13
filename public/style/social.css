@@ -159,6 +159,7 @@ header .container::before{
     top: 58px;
     height: 100vh;
     width: 16rem;
+    border-right: 1px solid #ccc;
 }
 .sub_menu{
     width: 100%;
@@ -312,6 +313,10 @@ header .container::before{
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+}
+.user_info a{
+    text-decoration: none;
+    color: #fff;
 }
 .user_imgs img{
     width: 100%;
