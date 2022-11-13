@@ -21,7 +21,7 @@
                     <a href="/signup/register">Register</a>
                 </div>
                 <div class="forgot_pass">
-                    <a href="">Forgot password</a>
+                    <a href="/signup/sendmail">Forgot password</a>
                 </div>
                 <div class="login_btn">
                     <button>Login</button>
@@ -32,12 +32,12 @@
                 <div class="items_option">
                     <div class="options">
                         <div class="option_img">
-                            <a href=""><img src="https://www.facebook.com/images/fb_icon_325x325.png" alt=""></a>
+                            <a href="/signup/facebook"><img src="https://www.facebook.com/images/fb_icon_325x325.png" alt=""></a>
                         </div>
                     </div>
                     <div class="options">
                         <div class="option_img">
-                            <a href=""><img
+                            <a href="/signup/google"><img
                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
                                     alt=""></a>
                         </div>
@@ -77,7 +77,7 @@
             else{
                 setTimeout(function(){
                     window.location.assign('/');
-                },2000)
+                },1000)
                 toastHandle('Login success','success',`Hello ${data.user}`);
             }
         }

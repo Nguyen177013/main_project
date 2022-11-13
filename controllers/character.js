@@ -23,5 +23,10 @@ class characterController{
         const data = await character.find();
         return data;
     }
+    async getCharbyOrg(req,res){
+        const orgId = req.params.id;
+        let characters = await figure.find({character:orgId});
+        res.json({characters});
+    }
 }
 module.exports = new characterController;

@@ -1,5 +1,7 @@
 const handleError = (err) => {
+  console.log(err.message);
   let errors = {email:'',password:'',username:''};
+  if (err.message === "email") errors.email = "Can not find this email";
   if(err.message ==='User'){
     errors['username']=  'Unknown username';
     return errors;

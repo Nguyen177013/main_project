@@ -7,6 +7,7 @@ function reveal(){
     let headerMenu = document.querySelector('.header_menu');
     let headerLogin = document.querySelector('.header_login');
     let userDetail = document.querySelector('.user_detail');
+    let find_text = document.querySelector('.find_text');
     if(top >=11.686957359313965){
         headerContainer.classList.add('scrollPos');
         if(userDetail)
@@ -14,6 +15,7 @@ function reveal(){
         headerlogo.classList.add('scroll_logo');
         headerMenu.classList.add('scroll_color');
         headerLogin.classList.add('scroll_color');
+        find_text.classList.add('border');
     }
     else{
         headerContainer.classList.remove('scrollPos');
@@ -22,7 +24,7 @@ function reveal(){
         headerlogo.classList.remove('scroll_logo');
         headerMenu.classList.remove('scroll_color');
         headerLogin.classList.remove('scroll_color');
-
+        find_text.classList.remove('border');
     }
     let reveals = document.querySelectorAll('.reveal');
     for(let reveal of reveals){

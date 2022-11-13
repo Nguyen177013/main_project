@@ -85,6 +85,9 @@
                     toastHandle('Error','error','Server cannot create your account. Please try again');
                 }
                 else{
+                    setTimeout(function(){
+                        window.location.assign('/signup/login');
+                    },1000)
                     toastHandle('Your User Id','success',data.user);
                 }
             }

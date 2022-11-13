@@ -1,4 +1,47 @@
 <script defer src="/script/loginEvent.js"></script>
+<script defer>
+    async function find() {
+        let find_text = document.querySelector('.find_text');
+        let list_data = document.querySelector('.find_data');
+        if (find_text.value !== '') {
+            list_data.classList.add('show_list');
+            try {
+                const req = await fetch('/figure/nav', {
+                    method: 'POST',
+                    body: JSON.stringify({ name: find_text.value }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                const data = await req.json();
+                console.log(data);
+                list_data.replaceChildren();
+                data.figures.forEach(figure => {
+                    let list = document.createElement('div');
+                    let html = `
+                    <a href="/figure/${figure._id}">
+                <div class="list_data">
+                    <div class="list_img">
+                        <img src="${figure.images[0]}" alt="">
+                        </div>
+                            <div class="list_about">
+                                <h4 style="color: #000 !important;">${figure.name}</h4>
+                                <span style="color: #000 !important;"> from ${figure.origin.name}</span>
+                                </div>
+                                </div>
+                                </a>
+                                `;
+                    list.innerHTML = html;
+                    list_data.appendChild(list);
+                })
+            }
+            catch (ex) {
+                console.log(ex.message);
+            }
+        }
+        else {
+            list_data.classList.remove('show_list');
+        }
+    }
+</script>
 <header>
     <div class="container">
         <div class="header_logo"><a href="/">Figure <span>Database</span></a></div>
@@ -12,7 +55,7 @@
                 </div>
             </div>
             <div class="nav_menu">
-                <a href="">Community</a>
+                <a href="/figure-wiki/">Community</a>
             </div>
             <div class="nav_menu">
                 <a>More</a>
@@ -23,44 +66,51 @@
             </div>
             <div class="find">
                 <form action="/figure/find">
-                    <input type="text" name="name">
+                    <input type="text" name="name" placeholder="Find something ..." class="find_text"
+                        onkeydown="find()">
                 </form>
+            </div>
+            <div class="find_data">
             </div>
         </div>
         <%if(!user){%>
             <div class="header_login">
                 <a href="/signup/login" href="">Login</a>
             </div>
-        <%}else{%>
-        <div class="header_login">
-            <input type="checkbox">
-            <div class="user_img">
-                <%if(user.img_url){%>
-                    <%}else{%>
-                        <img src="/detail/unknow.png" alt="">
+            <%}else{%>
+                <div class="header_login">
+                    <input type="checkbox">
+                    <div class="user_img">
+                        <%if(user.image.img_url){%>
+                            <img src="<%=user.image.img_url%>" alt="">
+                            <%}else{%>
+                                <img src="/detail/unknow.png" alt="">
+                                <%}%>
+                    </div>
+                </div>
+                <div class="form_user user_detail">
+                    <div class="user_menu">
+                        <a href="/user/<%=user._id%>" class="user_img">
+                            <%if(user.image.img_url){%>
+                                <img src="<%=user.image.img_url%>" alt="">
+                                <%}else{%>
+                                    <img src="/detail/unknow.png" alt="">
+                                    <%}%>
+                        </a>
+                        <div class="user_name">
+                            <a href="/user/<%=user._id%>">
+                                <%=user.username%>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="user_logout">
+                        <div class="logout_btn">
+                            <a href="/signup/logout">
+                                <button>Logout</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <%}%>
-            </div>
-        </div>
-        <div class="form_user user_detail">
-            <div class="user_menu">
-                <a href="" class="user_img">
-                    <%if(user.img_url){%>
-                        <%}else{%>
-                            <img src="/detail/unknow.png" alt="">
-                    <%}%>
-                </a>
-                <div class="user_name">
-                    <a href=""><%=user.username%></a>
-                </div>
-            </div>
-            <div class="user_logout">
-                <div class="logout_btn">
-                    <a href="/signup/logout">
-                        <button>Logout</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <%}%>
     </div>
 </header>

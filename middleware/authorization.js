@@ -6,15 +6,16 @@ const requireAuth = (req, res, next) => {
     jwt.verify(token, 'Hutech', (err, decoded) => {
       if (err) {
         console.log('this is err: ',err);
-        res.json({login:2});
+        res.redirect('/signup/login');
       }
       else {
+        req.data = decoded;
         next();
       }
     })
   }
   else {
-    res.json({login:1});
+    res.redirect('/signup/login');
   }
 }
 
@@ -29,6 +30,7 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
+        req.data = user;
         res.locals.user = user;
         next();
       }

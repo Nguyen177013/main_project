@@ -1,218 +1,231 @@
 <%-include('../partials/header.ejs')%>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-<%-include('../partials/nav.ejs')%>
-<link rel="stylesheet" href="../style/Detail_big.css">
-<main>
-    <section class="detail_fig detail">
-        <div class="container flex_imgs col-2">
-            <a href="<%=figure.images[0]%>" class="main_img MagicZoom">
-                <img src="<%=figure.images[0]%>" alt="">
-            </a>
-            <div class="sub_imgs">
-                <%figure.images.forEach(img=>{%>
-                    <div class="child_img">
-                        <img src="<%=img%>" alt="" class="img">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <%-include('../partials/nav.ejs')%>
+        <link rel="stylesheet" href="../style/Detail_big.css">
+        <main>
+            <section class="detail_fig detail">
+                <div class="container flex_imgs col-2">
+                    <a href="<%=figure.images[0]%>" class="main_img MagicZoom">
+                        <img src="<%=figure.images[0]%>" alt="">
+                    </a>
+                    <div class="sub_imgs">
+                        <%figure.images.forEach(img=>{%>
+                            <div class="child_img">
+                                <img src="<%=img%>" alt="" class="img">
+                            </div>
+                            <%})%>
                     </div>
-                <%})%>
-            </div>
-        </div>
-        <div class="container list_info">
-            <div class="detail_fig">
-                <div class="fig_info">
-                    <h3>Character</h3>
-                    <%figure.character.forEach(char=>{%>
-                        <a href="/character/<%=char._id%>"><%=char.name%></a>
-                    <%})%>
                 </div>
-                <div class="fig_info">
-                    <h3>From</h3>
-                        <a href="/origin/<%=figure.origin._id%>"><%=figure.origin.name%></a>
-                </div>
-                <div class="fig_info">
-                    <h3>Viewer</h3>
-                    <a href=""><%=views%></a>
-                </div>
-            </div>
-            <div class="detail_fig mt col">
-                <div class="about_fig">
-                    <ul class="list_info">
-                        <li><strong>Category </strong>: <a href="/category/<%=figure.category._id%>"><%=figure.category.name%></a></li>
-                        <li><strong>Artists</strong>:
-                            <%figure.artists.forEach(art=>{%>
-                                <a href="/artist/<%=art._id%>"><%=art.name%></a>,
+                <div class="container list_info">
+                    <div class="detail_fig">
+                        <div class="fig_info">
+                            <h3>Character</h3>
+                            <%figure.character.forEach(char=>{%>
+                                <a href="/character/<%=char._id%>">
+                                    <%=char.name%>
+                                </a>
                                 <%})%>
-                            </li>
-                        <li><strong>Version</strong>: <a href="">Astral Reflection Ver</a></li>
-                        <li><strong>Releases</strong>:<%figure.release_date.forEach((day,index)=>{%>
-                            <%if(index==figure.release_date.length-1){%>                              
-                                <a><%=day%> as Standard</a>,
-                                <%}else{%>
-                                    <a><%=day%></a>,
-                                <%}%>
-                            <%})%></li>
-                        <li><strong>Materials</strong>: 
-                            <%figure.materials.forEach(mt=>{%>
-                                <a href="/material/<%=mt._id%>"><%=mt.name%></a>,
-                                <%})%>
-                        </li>
-                        <li><strong>Dimensions</strong>: <a href="">1/7 W=187mm (7.29in) L=160mm (6.24in) H=247mm
-                                (9.63in, 1:1=1.73m)</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="detail_fig mt">
-                <div class="follow_btn">
-                    <div class="follow">
-                        <span>Follow</span> <span class="total"><%=favorate%></span>
+                        </div>
+                        <div class="fig_info">
+                            <h3>From</h3>
+                            <a href="/origin/<%=figure.origin._id%>">
+                                <%=figure.origin.name%>
+                            </a>
+                        </div>
+                        <div class="fig_info">
+                            <h3>Viewer</h3>
+                            <a href="">
+                                <%=views%>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="detail_fig mt col">
+                        <div class="about_fig">
+                            <ul class="list_info">
+                                <li><strong>Category </strong>: <a href="/category/<%=figure.category._id%>">
+                                        <%=figure.category.name%>
+                                    </a></li>
+                                <li><strong>Artists</strong>:
+                                    <%figure.artists.forEach(art=>{%>
+                                        <a href="/artist/<%=art._id%>">
+                                            <%=art.name%>
+                                        </a>,
+                                        <%})%>
+                                </li>
+                                <li><strong>Version</strong>: <a href="">Astral Reflection Ver</a></li>
+                                <li><strong>Releases</strong>:<%figure.release_date.forEach((day,index)=>{%>
+                                        <%if(index==figure.release_date.length-1){%>
+                                            <a>
+                                                <%=day%> as Standard
+                                            </a>,
+                                            <%}else{%>
+                                                <a>
+                                                    <%=day%>
+                                                </a>,
+                                                <%}%>
+                                                    <%})%>
+                                </li>
+                                <li><strong>Materials</strong>:
+                                    <%figure.materials.forEach(mt=>{%>
+                                        <a href="/material/<%=mt._id%>">
+                                            <%=mt.name%>
+                                        </a>,
+                                        <%})%>
+                                </li>
+                                <li><strong>Price</strong>: ¥<a
+                                        href="https://www.google.com/search?q=<%=figure.price%>+JPY+IN+VND"
+                                        target="_blank">
+                                        <%=figure.price%>
+                                    </a>VND</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="detail_fig mt">
+                        <div class="follow_btn">
+                            <div class="follow">
+                                <span>Follow</span> <span class="total">
+                                    <%=favorate%>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section class="detail">
-        <div>
-            <h2 class="title_menu">Companies Support</h2>
-        </div>
-        <div class="content">
-            <div class="img_display">
-                <%figure.company.forEach(com=>{%>
-                    <a href="<%=com.Homepage%>" class="company_logo"><img
-                        src="<%=com.image%>"alt="<%=com.name%>"></a>
-                <%})%>
-            </div>
-        </div>
-    </section>
-    <section class="detail">
-        <div>
-            <h2 class="title_menu">Comunity Images</h2>
-            <div class="content">
-                <div class="handle_img">
-                    <div class="showcase_img">
-                        <img src="/imgs/userImgs/2786036.jpeg" alt="">
-                    </div>
-                    <div class="showcase_img">
-                        <img src="/imgs/userImgs/3191548.jpeg" alt="">
-                    </div>
-                    <div class="showcase_img">
-                        <img src="/imgs/userImgs/3302247.jpeg" alt="">
-                    </div>
-                    <div class="showcase_img">
-                        <img src="/imgs/userImgs/3302267.jpeg" alt="">
-                    </div>
-                    <div class="showcase_img">
-                        <img src="/imgs/userImgs/3303517.jpeg" alt="">
+            </section>
+            <section class="detail">
+                <div>
+                    <h2 class="title_menu">Companies Support</h2>
+                </div>
+                <div class="content">
+                    <div class="img_display">
+                        <%figure.company.forEach(com=>{%>
+                            <a href="<%=com.Homepage%>" class="company_logo"><img src="<%=com.image%>"
+                                    alt="<%=com.name%>"></a>
+                            <%})%>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section class="detail">
-        <div>
-            <h2 class="title_menu">Comment</h2>
-        </div>
-        <div class="content">
-            <div class="cmt">
-                <textarea  id="body" name="body" required></textarea>
-                <div class="send-btn">
-                    <input type="submit" class="btn" placeholder="Gửi">
-                </div>
-            </div>
-            <div class="user_cmts">
-                <div class="user_info mr">
-                    <div class="user_img">
-                        <a href="" class="user">
-                            <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/279095969_1926112194242983_641351116880888048_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=uH2xozcNfDAAX-qKx13&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfB5v66eHJlNDvsPBLC5CKIGMArwLZFDZKCR8cFXfsjLYw&oe=6366B875"
-                            alt="">
-                        </a>
+            </section>
+            <section class="detail">
+                <div>
+                    <h2 class="title_menu">Comunity Images</h2>
+                    <div class="content">
+                        <div class="handle_img">
+                            <div class="showcase_img">
+                                <img src="/imgs/userImgs/2786036.jpeg" alt="">
+                            </div>
+                            <div class="showcase_img">
+                                <img src="/imgs/userImgs/3191548.jpeg" alt="">
+                            </div>
+                            <div class="showcase_img">
+                                <img src="/imgs/userImgs/3302247.jpeg" alt="">
+                            </div>
+                            <div class="showcase_img">
+                                <img src="/imgs/userImgs/3302267.jpeg" alt="">
+                            </div>
+                            <div class="showcase_img">
+                                <img src="/imgs/userImgs/3303517.jpeg" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="user_info">
-                    <div class="user_name">
-                         <a href=""><p class="name">Phan Nguyen</p></a>
-                        <div class="time">Oct 28 2022</div>
+            </section>
+            <section class="detail">
+                <div>
+                    <h2 class="title_menu">Comment</h2>
+                </div>
+                <div class="content">
+                    <div class="cmt">
+                        <form class="comment_form">
+                            <textarea id="myTextarea" name="myTextarea" required></textarea>
+                            <div class="send-btn">
+                                <input type="submit" class="btn">
+                            </div>
+                        </form>
                     </div>
-                    <div class="cmts">
-                        <p>Need this for my collection</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias facere sequi nemo dicta, numquam reiciendis voluptatibus fugit. Commodi dicta molestias possimus eum neque, assumenda nesciunt minima magni recusandae nisi amet!</p>
+                    <div class="coments">
+                        <%comments.forEach(comment=>{%>
+                        <div class="user_cmts">
+                            <div class="user_info mr">
+                                <div class="user_img">
+                                    <a href="/user/<%=comment.user._id%>" class="user">
+                                        <%if(comment.user.image.img_url){%>
+                                            <img src="<%=comment.user.image.img_url%>"
+                                                alt="">
+                                        <%}else{%>
+                                            <img src="/detail/unknow.png" alt="">
+                                        <%}%>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="user_info">
+                                <div class="user_name">
+                                    <a href="/user/<%=comment.user._id%>">
+                                        <p class="name"><%=comment.user.username%></p>
+                                    </a>
+                                    <div class="time"><%=moment(comment.dateComment).format('Do MMMM, YYYY')%></div>
+                                </div>
+                                <div class="cmts">
+                                    <%-comment.title%>
+                                </div>
+                            </div>
+                        </div>
+                        <%})%>
                     </div>
                 </div>
-            </div>
-            <div class="user_cmts">
-                <div class="user_info mr">
-                    <div class="user_img">
-                        <a href="" class="user">
-                            <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/279095969_1926112194242983_641351116880888048_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=uH2xozcNfDAAX-qKx13&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfB5v66eHJlNDvsPBLC5CKIGMArwLZFDZKCR8cFXfsjLYw&oe=6366B875"
-                            alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="user_info">
-                    <div class="user_name">
-                         <a href=""><p class="name">Phan Nguyen</p></a>
-                        <div class="time">Oct 28 2022</div>
-                    </div>
-                    <div class="cmts">
-                        <p>Need this for my collection</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias facere sequi nemo dicta, numquam reiciendis voluptatibus fugit. Commodi dicta molestias possimus eum neque, assumenda nesciunt minima magni recusandae nisi amet!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="user_cmts">
-                <div class="user_info mr">
-                    <div class="user_img">
-                        <a href="" class="user">
-                            <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/279095969_1926112194242983_641351116880888048_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=uH2xozcNfDAAX-qKx13&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfB5v66eHJlNDvsPBLC5CKIGMArwLZFDZKCR8cFXfsjLYw&oe=6366B875"
-                            alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="user_info">
-                    <div class="user_name">
-                         <a href=""><p class="name">Phan Nguyen</p></a>
-                        <div class="time">Oct 28 2022</div>
-                    </div>
-                    <div class="cmts">
-                        <p>Need this for my collection</p>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias facere sequi nemo dicta, numquam reiciendis voluptatibus fugit. Commodi dicta molestias possimus eum neque, assumenda nesciunt minima magni recusandae nisi amet!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> 
-<script src="/ckeditor/ckeditor.js"></script>
-<script src="/script/detailJS/slider.js"></script>
-<script src="/script/detailJS/clickImg.js"></script>
-<script src="/script/scroll.js"></script>
-<script>
-    CKEDITOR.config.toolbarCanCollapse = true;
-    CKEDITOR.replace('body',{})
-</script>
-<script>
-    let followBtn = document.querySelector('.follow');
-    let totalFollow = document.querySelector('.total');
-    followBtn.addEventListener('click', async function(e){
-        let figId = '<%=figure.id%>';
-        let user = '<%=user?.id%>';
-        let res = await fetch('/favorate/add',{
-                method:'POST',
-                body: JSON.stringify({figId,user}),
-                headers:{'Content-Type': 'application/json'}
+            </section>
+        </main>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script src="/ckeditor/ckeditor.js"></script>
+        <script src="/script/detailJS/slider.js"></script>
+        <script src="/script/detailJS/clickImg.js"></script>
+        <script src="/script/scroll.js"></script>
+        <script>
+            CKEDITOR.config.toolbarCanCollapse = true;
+            CKEDITOR.replace('myTextarea', {})
+        </script>
+        <script>
+            let followBtn = document.querySelector('.follow');
+            let totalFollow = document.querySelector('.total');
+            followBtn.addEventListener('click', async function (e) {
+                let figId = '<%=figure.id%>';
+                let user = '<%=user?.id%>';
+                let res = await fetch('/favorate/add', {
+                    method: 'POST',
+                    body: JSON.stringify({ figId, user }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                const data = await res.json();
+                console.log(data);
+                if (data.login) {
+                    window.location.href = '/signup/login';
+                }
+                if (data.add) {
+                    totalFollow.innerHTML = parseInt('<%=favorate%>') + 1;
+                }
+                if (data.remove) {
+                    totalFollow.innerHTML = parseInt('<%=favorate%>');
+                }
             })
-            const data = await res.json();
-            console.log(data);
-            if(data.login){
-                window.location.href = '/signup/login';
-            }
-            if(data.add){
-                totalFollow.innerHTML = parseInt('<%=favorate%>')+1;
-            }
-            if(data.remove){
-                totalFollow.innerHTML = parseInt('<%=favorate%>');
-            }
-    })
-</script>
-<%-include('../partials/footer.ejs')%>
+        </script>
+        <script>
+            let form = document.querySelector('.comment_form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                let figure = '<%=figure.id%>';
+                let user = '<%=user?.id%>';
+                let comments = document.querySelector('.coments');
+                let title = CKEDITOR.instances.myTextarea.getData();
+                let req = await fetch('/cmtFig/add',{
+                    method:'POST',
+                    body:JSON.stringify({ figure, user, title}),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                let data = await req.json();
+                console.log(data);
+                location.reload();
+                CKEDITOR.instances.myTextarea.setData('');
+            });
+        </script>
+        <%-include('../partials/footer.ejs')%>
