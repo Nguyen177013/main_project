@@ -1,8 +1,8 @@
 // Set up Engine-------------
 const express = require('express');
+const app = express();
 const http = require('http');
 const session  = require('express-session');
-const app = express();
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
@@ -12,6 +12,7 @@ const connectMongo = require('./db/connectDB');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const {checkUser} = require('./middleware/authorization');
+const socketHandler = require('./middleware/handleSocket');
 const passport = require('passport');
 // mongoodb connection
     try {
@@ -36,12 +37,36 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname,'public', 'imgs')));
 // Set up views Engine
 app.set('view engine', 'ejs');
-app.set('io',io);
 // Local Router
 app.get('*',checkUser);
 app.get('/', (req, res) => {
     res.redirect('/figure');
 });
+// handle socket.io
+let user ={};
+io.on('connection', socket=>{
+    socket.on('user_rep',(data)=>{
+        socket.join(data.figure);
+        io.sockets.in(data.figure).emit('user_rep',`user ${data.user} has joined`);
+    })
+    socket.on('user_mess',data=>{
+        console.log(data.userGet);
+        user[data.userSend] = socket.id;
+        io.sockets.to(user[data.userGet]).emit('user_mess',`user ${data.userSend } has joined`);
+        console.log(user);
+    })
+    socket.on('messenger',data=>{
+        console.log('this is messenger: ',data);
+        io.sockets.to(user[data.userGet]).emit('messenger',data);
+    })
+    socket.on('comments',async (data)=>{
+        console.log(data);
+        let comment = await socketHandler.addCommentFig(data.user,data.figure,data.title);
+        io.sockets.in(data.figure).emit('comments',comment);
+    })
+})
+
+
 // Dinamic Router
 app.use('/favorate',router.favorate);
 app.use('/signup', router.signin);
@@ -54,3 +79,4 @@ app.use('/material', router.material);
 app.use('/cmtFig', router.cmtFig);
 app.use('/figure-wiki',router.social);
 app.use('/user',router.user);
+app.use('/message',router.message);

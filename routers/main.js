@@ -8,6 +8,7 @@ const signin = require('./signup');
 const favorate = require('./favorate');
 const cmtFig = require('./figureComment');
 const social = require('./socialMedia');
+const message=  require('./message');
 const user = require('./user')
 module.exports = {
     home,
@@ -20,5 +21,6 @@ module.exports = {
     favorate,
     cmtFig,
     social,
-    user
+    user,
+    message
 };

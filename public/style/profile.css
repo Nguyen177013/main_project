@@ -2,6 +2,9 @@
     width: 1000px;
     margin: 0 auto;
 }
+.show{
+    display: block !important;
+}
 .profile_form{
     background-color: #fff;
     margin-top: 10rem;
@@ -34,6 +37,18 @@ label{
 }
 .change_title{
     width: 100%;
+}
+.change_img{
+    float: right;
+    display: none;
+}
+.btn_change{
+    background-color: #3386d4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 .change_ava{
     display: none;

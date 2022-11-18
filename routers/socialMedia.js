@@ -4,7 +4,6 @@ const media = require('../controllers/userPost');
 const upload = require('./multer');
 const {checkUser,requireAuth} = require('../middleware/authorization');
 router.get('/',requireAuth,media.index);
-router.get('/:id',media.sendmessage_get);
-router.get('/message',media.message_get);
 router.post('/post',checkUser,upload.array('img',10),media.post);
+router.post('/remove',media.remove);
 module.exports = router;

@@ -1,30 +1,38 @@
 const socket = io();
-const messageContainer = document.querySelector('.message_body');
-const messageForm = document.getElementById('send-container');
-const messageInput = document.getElementById('message-input');
-
-socket.emit('new-user',roomName,name);
-socket.on('send-chat-message',data=>{
+let message_input = document.getElementById('message-input');
+let form = document.getElementById('send-container');
+let message_body = document.querySelector('.message_body');
+socket.on('user_mess',(data)=>{
     console.log(data);
-    appendMessage(`${data.name}: ${data.message}`);
+}) 
+socket.emit('user_mess',{userSend:userSend,userGet:userGet})
+socket.on('messenger',data=>{
+    if(data.userSend !== userGet)
+    return;
+    handleGetMessage(data)
 })
-socket.on('chat-message',data=>{
-    appendMessage(`${data.name}: ${data.message}`);
-})
-socket.on('user-connected',data=>{
-    appendMessage(`${data} connected`);
-})
-socket.on('user-disconnected',data=>{
-    // appendMessage(`${data} disconnect`);
-})
-messageForm.addEventListener('submit',e=>{
+form.addEventListener('submit',function(e){
     e.preventDefault();
-    const message = messageInput.value;
-    socket.emit('send-chat-message',roomName,message);
-    messageInput.value = '';
+    console.log('this is send', message_input.value);
+    handleSendMessage(message_input.value);
+    socket.emit('messenger',{userSend:userSend,userGet:userGet,message:message_input.value});
+    message_input.value = '';
 })
-function appendMessage(message){
-    const messageElement = document.createElement('div');
-    messageElement.innerText = message;
-    messageContainer.append(messageElement);
+function handleSendMessage(message){
+    let send = document.createElement('div');
+    send.classList.add('user_send');
+    let html = `
+        <p class="send">${message}</p>
+    `
+    send.innerHTML = html;
+    message_body.appendChild(send);
+}
+function handleGetMessage(data){
+    let send = document.createElement('div');
+    send.classList.add('user_get');
+    let html = `
+        <p class="get">${data.message}</p>
+    `
+    send.innerHTML = html;
+    message_body.appendChild(send);
 }

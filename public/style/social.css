@@ -159,7 +159,6 @@ header .container::before{
     top: 58px;
     height: 100vh;
     width: 16rem;
-    border-right: 1px solid #ccc;
 }
 .sub_menu{
     width: 100%;
@@ -232,9 +231,55 @@ header .container::before{
 .social_media{
     margin-top: 4.5rem;
     display: flex;
+    height: calc(100% - 4.5rem);
 }
 .left_menu{
     flex: 1;
+}
+.header_message{
+    flex: 0.5;
+    display: flex;
+    text-decoration: none;
+}
+.message_body{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.post_option{
+    position: relative;
+}
+.option{
+    width:25px;
+    cursor: pointer;
+    transition: all .13s;
+}
+.option:hover{
+    opacity: 0.5;
+}
+.user_info{
+    flex: 1;
+}
+.send, .get{
+    display: block;
+    color: #fff;
+    margin: 5px 0;
+    padding: 5px 25px;
+    border-radius: 5px;
+}
+.get{
+    background-color: #7d7e7fa1;
+}
+.send{
+    background-color: #2696E9;
+}
+.user_get{
+    margin-right: auto;
+    margin-left: 15px;
+}
+.user_send{
+    margin-left: auto;
+    margin-right: 15px;
 }
 .poster{
     flex: 3;
@@ -262,6 +307,9 @@ header .container::before{
 .user_text textarea:focus{
     outline: none;
 }
+.form_post{
+    margin: 10px 0;
+}
 .form_post, .form_option{
     display: flex;
     text-decoration: none;
@@ -275,6 +323,21 @@ header .container::before{
     flex-grow:1;
     text-align: end;
     margin-right: 25px;
+}
+#send-container{
+    display: flex;
+}
+#send-container #message-input{
+    flex: 1;
+    margin-left: 34px;
+}
+#send-container #send-button{
+    padding: 5px 15px;
+    border: none;
+    color: #fff;
+    background-color: #2696E9;
+    margin-left: 15px;
+    cursor: pointer;
 }
 .send_btn{
     padding: 3px 2rem;

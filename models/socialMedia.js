@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const cloudinary = require('../controllers/cloudinary');
 const mediaPostsSchema = new mongoose.Schema({
     user:{
         type:mongoose.SchemaTypes.ObjectId,
@@ -25,5 +26,13 @@ const mediaPostsSchema = new mongoose.Schema({
         ref:"characters"
     },
 });
+
+mediaPostsSchema.post('remove', async function () {
+    console.log('success removed');
+    this.images.forEach(async image=>{
+        console.log(image);
+        await cloudinary.uploader.destroy(image.id);
+    })
+})
 const mediaPosts  =  mongoose.model('userPost', mediaPostsSchema);
 module.exports = mediaPosts;

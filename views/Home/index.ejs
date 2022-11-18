@@ -70,17 +70,17 @@
             <div class="container reveal">
                 <h2>Items on Fire</h2>
                 <div class="cards">
-                    <%figures.forEach(figure=>{%>
-                        <a href="/figure/<%=figure._id%>" class="text-card" style="background-image: url('<%=figure.images[0]%>');background-size: cover;
+                    <%views.forEach(view=>{%>
+                        <a href="/figure/<%=view._id%>" class="text-card" style="background-image: url('<%=view.figure[0].images[0]%>');background-size: cover;
                         background-repeat: no-repeat;">
                             <div class="about_fig">
                                 <h3>Title</h3>
-                                <p><%=figure.name%></p>
+                                <p><%=view.figure[0].name%></p>
                                  </div>
                         </a>
                     <%})%>
-                    <%if(figures.length<=5){%>
-                        <a href="/figure/items" class="more" >
+                    <%if(figures.length>=5){%>
+                        <a href="" class="more" >
                             <h3>View More</h3>
                         </a>
                     <%}%>

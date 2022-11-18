@@ -5,6 +5,7 @@ const handleError = require('../middleware/handleError');
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 const passport = require('passport');
+const cloudinary = require('./cloudinary');
 const facebookStrategy = require('passport-facebook').Strategy;
 const googleStrategy = require('passport-google-oauth2').Strategy;
 const moment = require('moment')
@@ -154,7 +155,7 @@ class userController {
           };
           await transporter.sendMail(msg, function (err, success) {
             if (err) console.log(err);
-            else console.log("Gửi mail thành công!!");
+            else console.log("Send mail successfully");
             res.status(201).json({user:'Check your mailbox'})
           });
         } catch (ex) {
@@ -166,6 +167,18 @@ class userController {
         let userId = req.params.id;
         let [user,figure] = await Promise.all([Account.findById(userId),Posts.find({user:mongoose.Types.ObjectId(userId)}).populate('user').sort({_id:-1})]);
         res.render('SocialMedia/profile',{userd:user,posts:figure,moment:moment});
+    }
+    async updateUser(req,res){
+        let userId = req.params.id;
+        let file = req.file;
+        console.log(file.path);
+        const user = await Account.findById(userId);
+        if(user?.image){
+            await cloudinary.uploader.destroy(user.image.id);
+        }
+        const image = await cloudinary.v2.uploader.upload(file.path,{folder: "/User_Ava/"});
+        const result = await Account.findByIdAndUpdate(userId,{image:{id:image.public_id,img_url:image.secure_url}});
+        res.redirect(`/user/${userId}`);
     }
     async logOut(req,res){
         res.cookie('user','',{httpOnly:true,maxAge:1});

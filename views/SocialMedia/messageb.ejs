@@ -1,9 +1,12 @@
 <%-include('../partials/header.ejs')%>
     <link rel="stylesheet" href="../style/social.css">
     <style>
+        main{
+            height: calc(100vh - 4.5rem);
+        }
         .user{
     display: flex;
-    width: 15rem;
+    width: 100%;
     margin: 10px 0;
     padding: 5px 10px;
     transition: all 0.2s;
@@ -12,9 +15,8 @@
 .user:hover{
     background-color: #3c445a;
 }
-.contain{
-    border-right: 1px solid #ccc;
-    height: 100vh;
+.message_body{
+    flex: 6;
 }
 .list_message{
     width: 25rem;
@@ -25,12 +27,17 @@
 .main_message{
     font-size: 15px;
     color: #ccc;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 .left_menu{
-    flex: 0.7;
+    flex: 0.6;
+    border-right: 1px solid #ccc;
 }
 .poster{
     flex: 1;
+    border-right: 1px solid #ccc;
 }
 .message{
     flex: 2;
@@ -47,7 +54,7 @@
                                 <div class="option_item">
                                     <a href="/user/<%=user._id%>" class="form_post">
                                         <div class="option_img">
-                                                    <img src="./imgs/1249991.jpg" alt="">
+                                                    <img src="<%=user.image.img_url%>" alt="">
                                         </div>
                                     </a>
                                     <div class="option_name">
@@ -111,16 +118,14 @@
                 <div class="contain">
                     <div class="list_message">
                         <%users.forEach(u=>{%>                
-                            <div class="user">
-                                <a href="/figure-wiki/<%=u._id%>" class="form_post">
+                                <a href="/message/<%=u._id%>" class="form_post">
                                     <div class="option_img">
-                                        <%if(user.image.img_url){%>
+                                        <%if(u.image.img_url){%>
                                             <img src="<%=u.image.img_url%>" alt="">
                                         <%}else{%>
                                                 <img src="/detail/unknow.png" alt="">
                                         <%}%>
                                     </div>
-                                </a>
                                 <div class="message_name">
                                     <p class="form_post">
                                         <span><%=u.username%></span>
@@ -129,7 +134,7 @@
                                         <span>Hello world</span>
                                     </p>
                                 </div>
-                            </div>     
+                            </a>     
                         <%})%>
                     </div>
                 </div>
@@ -137,12 +142,17 @@
             <div class="message">
                 <div class="main_message">
                     <div class="header_message">
+                        <a href="/user/<%=userChat.id%>" class="header_message">
                         <div class="option_img">
-                            <img src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/279095969_1926112194242983_641351116880888048_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EsOISS8rkAYAX8J5BLg&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfAGP3hmQK30GJXb44narFwnik0R-eBHvi2ORHv4ocv9fw&oe=63768A75" alt="">
+                            <%if(userChat.image.img_url){%>
+                                <img src="<%=userChat.image.img_url%>" alt="">
+                            <%}else{%>
+                                    <img src="/detail/unknow.png" alt="">
+                            <%}%>
                         </div>
                         <div class="option_name">
-                                <span>Phan Nguyen</span>
-                        </div>
+                                <span><%=userChat.username%></span>
+                        </div></a>
                     </div>
                     <div class="message_body">
                     </div>
@@ -156,8 +166,8 @@
     </main>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        let roomName = '<%=roomName%>' 
-        let name = '<%=user._id%>'
+        let userSend = '<%=user._id%>' 
+        let userGet = '<%=userChat.id%>';
     </script>
     <script src="/script/socketHandle.js"></script>
 <%-include('../partials/footer.ejs')%>

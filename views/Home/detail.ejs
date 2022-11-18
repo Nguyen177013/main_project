@@ -1,18 +1,19 @@
 <%-include('../partials/header.ejs')%>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <%-include('../partials/nav.ejs')%>
+    <link type="text/css" rel="stylesheet" href="../style/magiczoomplus.css"/>
         <link rel="stylesheet" href="../style/Detail_big.css">
         <main>
             <section class="detail_fig detail">
                 <div class="container flex_imgs col-2">
-                    <a href="<%=figure.images[0]%>" class="main_img MagicZoom">
+                    <a href="<%=figure.images[0]%>" class="main_img MagicZoom" data-options="zoomWidth:250px; zoomHeight:250px" id="figure">
                         <img src="<%=figure.images[0]%>" alt="">
                     </a>
                     <div class="sub_imgs">
                         <%figure.images.forEach(img=>{%>
-                            <div class="child_img">
+                            <a href="<%=img%>" class="child_img"  data-zoom-id="figure">
                                 <img src="<%=img%>" alt="" class="img">
-                            </div>
+                            </a>
                             <%})%>
                     </div>
                 </div>
@@ -161,7 +162,7 @@
                                     <a href="/user/<%=comment.user._id%>">
                                         <p class="name"><%=comment.user.username%></p>
                                     </a>
-                                    <div class="time"><%=moment(comment.dateComment).format('Do MMMM, YYYY')%></div>
+                                    <div class="time"><%=new Date(comment.dateComment).toLocaleString()%></div>
                                 </div>
                                 <div class="cmts">
                                     <%-comment.title%>
@@ -173,6 +174,8 @@
                 </div>
             </section>
         </main>
+    
+<script type="text/javascript" src="/script/magiczoomplus.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript"
@@ -209,23 +212,53 @@
                 }
             })
         </script>
+          <script src="/socket.io/socket.io.js"></script>
         <script>
+            const socket = io();
+            let handleComment =(data)=>{
+                let coments = document.querySelector('.coments');
+                let user_cmt = document.createElement('div');
+                user_cmt.classList.add('user_cmts');
+                let html = `
+                <div class="user_info mr">
+                                <div class="user_img">
+                                    <a href="/user/" class="user">
+                                        ${data.user?.image?.img_url?"<img src='"+data.user.image.img_url+"' alt=''>":"<img src='/detail/unknow.png' alt=''>"}  
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="user_info">
+                                <div class="user_name">
+                                    <a href="/user/">
+                                        <p class="name">${data.user.username}</p>
+                                    </a>
+                                    <div class="time">${new Date(data.dateComment).toLocaleString()}</div>
+                                </div>
+                                <div class="cmts">
+                                    ${data.title}
+                                </div>
+                            </div>
+                `
+                user_cmt.innerHTML = html;
+                coments.insertBefore(user_cmt,coments.firstChild);
+            }
+            let figure = '<%=figure.id%>';
+            let user = '<%=user?.id%>';
             let form = document.querySelector('.comment_form');
+            socket.emit('user_rep',{figure,user});
+            socket.on('user_rep',data=>{
+                console.log(data);
+            })
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                let figure = '<%=figure.id%>';
-                let user = '<%=user?.id%>';
-                let comments = document.querySelector('.coments');
+                // let comments = document.querySelector('.coments');
                 let title = CKEDITOR.instances.myTextarea.getData();
-                let req = await fetch('/cmtFig/add',{
-                    method:'POST',
-                    body:JSON.stringify({ figure, user, title}),
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                let data = await req.json();
-                console.log(data);
-                location.reload();
-                CKEDITOR.instances.myTextarea.setData('');
+                socket.emit('comments',{figure,user,title});
+                // CKEDITOR.instances.myTextarea.setData('');
             });
+            socket.on('comments',data=>{
+                handleComment(data);
+                console.log(data);
+            })
         </script>
         <%-include('../partials/footer.ejs')%>
