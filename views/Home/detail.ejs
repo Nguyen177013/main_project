@@ -54,18 +54,7 @@
                                         <%})%>
                                 </li>
                                 <li><strong>Version</strong>: <a href="">Astral Reflection Ver</a></li>
-                                <li><strong>Releases</strong>:<%figure.release_date.forEach((day,index)=>{%>
-                                        <%if(index==figure.release_date.length-1){%>
-                                            <a>
-                                                <%=day%> as Standard
-                                            </a>,
-                                            <%}else{%>
-                                                <a>
-                                                    <%=day%>
-                                                </a>,
-                                                <%}%>
-                                                    <%})%>
-                                </li>
+                                <li><strong>Releases</strong>:<%=new Date(figure.release_date).toDateString()%></li>
                                 <li><strong>Materials</strong>:
                                     <%figure.materials.forEach(mt=>{%>
                                         <a href="/material/<%=mt._id%>">
@@ -162,7 +151,7 @@
                                     <a href="/user/<%=comment.user._id%>">
                                         <p class="name"><%=comment.user.username%></p>
                                     </a>
-                                    <div class="time"><%=new Date(comment.dateComment).toLocaleString()%></div>
+                                    <div class="time"><%=new Date(comment.dateComment).toDateString()%></div>
                                 </div>
                                 <div class="cmts">
                                     <%-comment.title%>

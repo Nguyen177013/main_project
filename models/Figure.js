@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const figure = new mongoose.Schema({
+const figureSchema = new mongoose.Schema({
     name:String,
     category:{
         type:mongoose.SchemaTypes.ObjectId,
@@ -36,9 +36,29 @@ const figure = new mongoose.Schema({
     },
     price:String,
     release_date:{
-        type: [Date],
+        type: Date,
         default: Date.now
     }
 });
-const Figure = mongoose.model('figures',figure);
+figureSchema.statics.getByMonth = function(month,year){
+    const list_month = this.aggregate([  {
+        '$project': {
+          'name': 1, 
+          'images':1,
+          'month': {
+            '$month': '$release_date'
+          }, 
+          'year': {
+            '$year': '$release_date'
+          }
+        }
+      }, {
+        '$match': {
+          'month': month, 
+          'year': year
+        }
+      }]);
+      return list_month;
+}
+const Figure = mongoose.model('figures',figureSchema);
 module.exports = Figure;

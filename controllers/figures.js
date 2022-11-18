@@ -9,12 +9,14 @@ const Views = require('../models/userView');
 const Comment = require('../controllers/comment');
 const Favorate = require('./favorate');
 const moment = require("moment");
+const thisDate = new Date();
 class FigureController{
     async index (req,res){
+        let thisMonth = thisDate.getMonth()+1;
+        let thisYear = thisDate.getFullYear();
         const latest = Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
-        let [late,topView] = await Promise.all([latest,Views.sortView()]);
-        // console.log(topView[0]);
-        res.render('Home/index',{figures:late,views:topView});
+        let [late,topView,month] = await Promise.all([latest,Views.sortView(),Figure.getByMonth(thisMonth,thisYear)]);
+        res.render('Home/index',{figures:late,months:month,views:topView});
     }
     async figure_detail(req,res){
         const fig_id = req.params.id;

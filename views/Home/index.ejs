@@ -45,20 +45,21 @@
                 </div>
             </div>
         </section>
+        <%if(months.length>0){%>
         <section>
             <div class="container reveal">
                 <h2>This Month Releases</h2>         
                 <div class="cards">
-                    <%figures.forEach(figure=>{%>
-                        <a href="/figure/<%=figure._id%>" class="text-card" style="background-image: url('<%=figure.images[0]%>');background-size: cover;
+                    <%months.forEach(month=>{%>
+                        <a href="/figure/<%=month._id%>" class="text-card" style="background-image: url('<%=month.images[0]%>');background-size: cover;
                         background-repeat: no-repeat;">
                             <div class="about_fig">
                                 <h3>Title</h3>
-                                <p><%=figure.name%></p>
+                                <p><%=month.name%></p>
                                  </div>
                         </a>
                     <%})%>
-                    <%if(figures.length>=5){%>
+                    <%if(months.length>=5){%>
                         <a href="" class="more" >
                             <h3>View More</h3>
                         </a>
@@ -66,6 +67,7 @@
                 </div>
             </div>
         </section>
+        <%}%>
         <section>
             <div class="container reveal">
                 <h2>Items on Fire</h2>
@@ -79,7 +81,7 @@
                                  </div>
                         </a>
                     <%})%>
-                    <%if(figures.length>=5){%>
+                    <%if(views.length>=5){%>
                         <a href="" class="more" >
                             <h3>View More</h3>
                         </a>
