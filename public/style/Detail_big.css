@@ -267,12 +267,15 @@ figure{
 .follow_btn{
     margin-left: auto;
 }
-.follow{
+.follow, .followed{
     padding: 8px 30px;
-    background: #e81313;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #e81313;
+}
+.followed{
+    background-color: #2696E9;
 }
 .list_info{
     list-style-type: none;

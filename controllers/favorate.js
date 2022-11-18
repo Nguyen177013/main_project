@@ -1,9 +1,20 @@
 const Favorate = require('../models/favorate');
-
+const mongoose = require('mongoose');
 class favorateController{
     async totalFavorate(id){
         let figureId = id;  
         return await Favorate.find({figure:id}).count();
+    }
+    async getFavorate(id){
+        let figureId = id;
+        
+        return await Favorate.find({figure:id});
+    }
+    async checkUser(userId,figId){
+        let user = userId;
+        let fig = figId;
+        console.log({user,fig});
+        return await Favorate.findOne({user:mongoose.Types.ObjectId(user),figure:mongoose.Types.ObjectId(fig)});
     }
     async addFavorate(req,res){
         let {figId,user} = req.body;  

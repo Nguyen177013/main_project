@@ -8,7 +8,6 @@ const Origins = require('../models/Origins');
 const Views = require('../models/userView');
 const Comment = require('../controllers/comment');
 const Favorate = require('./favorate');
-const moment = require("moment");
 const thisDate = new Date();
 class FigureController{
     async index (req,res){
@@ -20,14 +19,16 @@ class FigureController{
     }
     async figure_detail(req,res){
         const fig_id = req.params.id;
+        let userId = res?.locals?.user?.id;
         const figure = Figure.findById(fig_id).populate('category')
         .populate('artists').populate('character')
         .populate('origin').populate('company').populate('materials');
         const views =  Views.find({figure:fig_id}).count();
-        const favorate = Favorate.totalFavorate(fig_id);
+        const total = Favorate.totalFavorate(fig_id);
         let comments = Comment.getAllComment(fig_id);
-        const [a,b,c,d] = await Promise.all([figure,views,favorate,comments]);
-        res.render('Home/detail',{title:"detail",figure:a,views:b,favorate:c,comments:d,moment:moment});
+        let check = Favorate.checkUser(userId,fig_id);
+        const [a,b,c,d,e] = await Promise.all([figure,views,total,comments,check]);
+        res.render('Home/detail',{title:"detail",figure:a,views:b,favorate:c,comments:d,check:e});
     }
     async itemFigure(req,res){
         const figure = await Figure.find();

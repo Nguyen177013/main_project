@@ -72,11 +72,19 @@
                     </div>
                     <div class="detail_fig mt">
                         <div class="follow_btn">
+                            <%if(!check){%>
                             <div class="follow">
                                 <span>Follow</span> <span class="total">
                                     <%=favorate%>
                                 </span>
                             </div>
+                        <%}else{%>
+                            <div class="follow followed">
+                                <span>Followed</span> <span class="total">
+                                    <%=favorate%>
+                                </span>
+                            </div>
+                        <%}%>
                         </div>
                     </div>
                 </div>
@@ -164,7 +172,7 @@
             </section>
         </main>
     
-<script type="text/javascript" src="/script/magiczoomplus.js"></script>
+        <script type="text/javascript" src="/script/magiczoomplus.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript"
@@ -178,9 +186,12 @@
             CKEDITOR.replace('myTextarea', {})
         </script>
         <script>
-            let followBtn = document.querySelector('.follow');
-            let totalFollow = document.querySelector('.total');
-            followBtn.addEventListener('click', async function (e) {
+           
+           let figId = '<%=figure.id%>';
+           let followBtn = document.querySelector('.follow');
+           let total = document.querySelector('.follow span');
+           let totalFollow = document.querySelector('.total');
+           followBtn.addEventListener('click', async function (e) {
                 let figId = '<%=figure.id%>';
                 let user = '<%=user?.id%>';
                 let res = await fetch('/favorate/add', {
@@ -189,15 +200,20 @@
                     headers: { 'Content-Type': 'application/json' }
                 })
                 const data = await res.json();
-                console.log(data);
                 if (data.login) {
                     window.location.href = '/signup/login';
                 }
                 if (data.add) {
-                    totalFollow.innerHTML = parseInt('<%=favorate%>') + 1;
+                    totalFollow.innerHTML = parseInt(totalFollow.innerText) + 1;
+                    total.innerText = "Followed" 
+                    followBtn.classList.add('followed');
+                    return;
                 }
                 if (data.remove) {
-                    totalFollow.innerHTML = parseInt('<%=favorate%>');
+                    totalFollow.innerHTML = parseInt(totalFollow.innerText) -1;
+                    total.innerText = "Follow"
+                    followBtn.classList.remove('followed');
+                    return;
                 }
             })
         </script>
