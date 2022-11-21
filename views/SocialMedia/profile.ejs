@@ -44,7 +44,7 @@
                                 <a href="">Follow</a>
                             </div>
                             <div class="message">
-                                <a href="">Message</a>
+                                <a>Message</a>
                             </div>
                         </div>
                         <%}%>
@@ -102,7 +102,8 @@
         </div>
     </main>
     <script>
-        let userId = '<%=user.id%>';
+        let userSend = '<%=user.id%>';
+        let userGet = '<%=userd.id%>';
         let pro_img = document.querySelector('.img img');
         let file = document.querySelector('#change');
         let btn = document.querySelector('.change_img');
@@ -111,6 +112,19 @@
         pro_img.src = URL.createObjectURL(image);
         btn.classList.add('show');
 }
+</script>
+<script>
+    let message = document.querySelector('.message');
+    message.addEventListener('click',async function(e){
+        let req = await fetch('/message/addList',{
+            method:"POST",
+            body: JSON.stringify({userSend,userGet}),
+            headers:{'Content-Type': 'application/json'}
+        })
+        let data = await req.json();
+        console.log(data);
+        window.location.href = `/message/${data.success}`
+    });
 </script>
 <script src="/script/handleDelete.js"></script>
 <%-include('../partials/footer.ejs')%>

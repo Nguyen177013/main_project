@@ -11,12 +11,32 @@ socket.on('messenger',data=>{
     return;
     handleGetMessage(data)
 })
-form.addEventListener('submit',function(e){
+form.addEventListener('submit', async function(e){
     e.preventDefault();
-    console.log('this is send', message_input.value);
-    handleSendMessage(message_input.value);
-    socket.emit('messenger',{userSend:userSend,userGet:userGet,message:message_input.value});
-    message_input.value = '';
+    let message = message_input.value;
+    try{
+        let req = await fetch('/message/sendmessage',{
+            method:"POST",
+            body: JSON.stringify({userSend,userGet,message}),
+            headers:{'Content-Type': 'application/json'}
+        })
+        let check = await fetch('/message/addList',{
+            method:"POST",
+            body: JSON.stringify({userGet:userSend,userSend:userGet}),
+            headers:{'Content-Type': 'application/json'}
+        });
+        let result = await check.json();
+        console.log(result);
+        let res = await req.json();
+        if(res){
+            handleSendMessage(message);
+            socket.emit('messenger',{userSend:userSend,userGet:userGet,message:message});
+            message_input.value = '';
+        }
+    }
+    catch(ex){
+        console.log(ex.message);
+    }
 })
 function handleSendMessage(message){
     let send = document.createElement('div');

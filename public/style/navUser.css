@@ -6,7 +6,9 @@
   ::-webkit-scrollbar-track {
     background: #f1f1f1; 
   }
-   
+  .pagination{
+    text-align: center;
+  }
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888; 
@@ -24,7 +26,26 @@
     justify-content: center;
     position: relative;
 }
-
+.page_btn{
+    display: inline-block;
+    transition: all .5s;
+  }
+.page{
+background: #fee996;
+padding: 0.4rem 1.2rem;
+border-radius: 7px;
+margin: 10px;
+font-weight: bold;
+text-decoration: none;
+color: #555;
+}
+.selected{
+    background: #ef3a3a;
+    color: #fff;
+  }
+  .page_btn:hover{
+    transform: translateY(-5px);
+  }
 .find input {
     padding: 2px 10px;
     width: 22rem;

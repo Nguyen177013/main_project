@@ -169,16 +169,20 @@ class userController {
         res.render('SocialMedia/profile',{userd:user,posts:figure,moment:moment});
     }
     async updateUser(req,res){
+        try{
         let userId = req.params.id;
         let file = req.file;
         console.log(file.path);
         const user = await Account.findById(userId);
-        if(user?.image){
+        if(user.image.id){
             await cloudinary.uploader.destroy(user.image.id);
         }
         const image = await cloudinary.v2.uploader.upload(file.path,{folder: "/User_Ava/"});
-        const result = await Account.findByIdAndUpdate(userId,{image:{id:image.public_id,img_url:image.secure_url}});
+        await Account.findByIdAndUpdate(userId,{image:{id:image.public_id,img_url:image.secure_url}});
         res.redirect(`/user/${userId}`);
+        }catch(ex){
+            console.log(ex.message);
+        }
     }
     async logOut(req,res){
         res.cookie('user','',{httpOnly:true,maxAge:1});

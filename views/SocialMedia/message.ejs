@@ -21,9 +21,6 @@
 .list_message{
     width: 25rem;
 }
-.message_name{
-
-}
 .main_message{
     font-size: 15px;
     color: #ccc;
@@ -36,7 +33,7 @@
     border-right: 1px solid #ccc;
 }
 .poster{
-    flex: 1;
+    flex: 2;
     border-right: 1px solid #ccc;
 }
 .message{
@@ -59,7 +56,7 @@
                                     </a>
                                     <div class="option_name">
                                         <a href="/user/<%=user._id%>" class="form_post">
-                                            <span>Phan Nguyen</span>
+                                            <span><%=user.username%></span>
                                         </a>
                                     </div>
                                 </div>
@@ -117,18 +114,18 @@
             <div class="poster">
                 <div class="contain">
                     <div class="list_message">
-                        <%users.forEach(u=>{%>                
-                                <a href="/message/<%=u._id%>" class="form_post">
+                        <%list.forEach(u=>{%>                
+                                <a href="/message/<%=u.userGet._id%>" class="form_post">
                                     <div class="option_img">
-                                        <%if(u.image.img_url){%>
-                                            <img src="<%=u.image.img_url%>" alt="">
+                                        <%if(u.userGet?.image?.img_url){%>
+                                            <img src="<%=u.userGet.image.img_url%>" alt="">
                                         <%}else{%>
                                                 <img src="/detail/unknow.png" alt="">
                                         <%}%>
                                     </div>
                                 <div class="message_name">
                                     <p class="form_post">
-                                        <span><%=u.username%></span>
+                                        <span><%=u.userGet.username%></span>
                                     </p>
                                     <p class="main_message">
                                         <span>Hello world</span>

@@ -17,6 +17,14 @@ class FigureController{
         let [late,topView,month] = await Promise.all([latest,Views.sortView(),Figure.getByMonth(thisMonth,thisYear)]);
         res.render('Home/index',{figures:late,months:month,views:topView});
     }
+    async latest_fig(req,res){
+        const figPerPage = 5
+        const length = await Figure.find().count();
+        const page = req.params.p-1;
+        const latest = await Figure.find().populate('category').populate('artists').populate('character')
+        .sort({_id: -1}).skip(figPerPage * page).limit(figPerPage);
+        res.render('Figure/latest',{length,page,latest:latest});
+    }
     async figure_detail(req,res){
         const fig_id = req.params.id;
         let userId = res?.locals?.user?.id;

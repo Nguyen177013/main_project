@@ -46,21 +46,16 @@ app.get('/', (req, res) => {
 let user ={};
 io.on('connection', socket=>{
     socket.on('user_rep',(data)=>{
-        socket.join(data.figure);
         io.sockets.in(data.figure).emit('user_rep',`user ${data.user} has joined`);
     })
     socket.on('user_mess',data=>{
-        console.log(data.userGet);
         user[data.userSend] = socket.id;
         io.sockets.to(user[data.userGet]).emit('user_mess',`user ${data.userSend } has joined`);
-        console.log(user);
     })
     socket.on('messenger',data=>{
-        console.log('this is messenger: ',data);
         io.sockets.to(user[data.userGet]).emit('messenger',data);
     })
     socket.on('comments',async (data)=>{
-        console.log(data);
         let comment = await socketHandler.addCommentFig(data.user,data.figure,data.title);
         io.sockets.in(data.figure).emit('comments',comment);
     })
@@ -80,3 +75,8 @@ app.use('/cmtFig', router.cmtFig);
 app.use('/figure-wiki',router.social);
 app.use('/user',router.user);
 app.use('/message',router.message);
+app.use('/purchage',router.purchage);
+// console.log(new Date(Date.now() + 1000));
+app.use('*',(req,res)=>{
+    res.render('404/404');
+})

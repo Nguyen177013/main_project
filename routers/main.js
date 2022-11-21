@@ -10,6 +10,7 @@ const cmtFig = require('./figureComment');
 const social = require('./socialMedia');
 const message=  require('./message');
 const user = require('./user')
+const purchage = require('./purchage');
 module.exports = {
     home,
     character,
@@ -22,5 +23,6 @@ module.exports = {
     cmtFig,
     social,
     user,
-    message
+    message,
+    purchage
 };

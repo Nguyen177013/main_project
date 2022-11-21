@@ -22,7 +22,6 @@
     width: 25rem;
 }
 .message_name{
-
 }
 .main_message{
     font-size: 15px;
@@ -54,13 +53,18 @@
                                 <div class="option_item">
                                     <a href="/user/<%=user._id%>" class="form_post">
                                         <div class="option_img">
-                                                    <img src="<%=user.image.img_url%>" alt="">
+                                            <%if(user.image?.img_url){%>
+                                                <img src="<%=user.image.img_url%>" alt="">
+                                            <%}else{%>
+                                                    <img src="/detail/unknow.png" alt="">
+                                            <%}%>
                                         </div>
                                     </a>
                                     <div class="option_name">
                                         <a href="/user/<%=user._id%>" class="form_post">
-                                            <span>Phan Nguyen</span>
+                                            <span><%=user.username%></span>
                                         </a>
+
                                     </div>
                                 </div>
                                 <div class="option_item">
@@ -118,20 +122,17 @@
                 <div class="contain">
                     <div class="list_message">
                         <%users.forEach(u=>{%>                
-                                <a href="/message/<%=u._id%>" class="form_post">
+                                <a href="/message/<%=u.userGet._id%>" class="form_post">
                                     <div class="option_img">
-                                        <%if(u.image.img_url){%>
-                                            <img src="<%=u.image.img_url%>" alt="">
+                                        <%if(u.userGet?.image.img_url){%>
+                                            <img src="<%=u.userGet?.image.img_url%>" alt="">
                                         <%}else{%>
                                                 <img src="/detail/unknow.png" alt="">
                                         <%}%>
                                     </div>
                                 <div class="message_name">
                                     <p class="form_post">
-                                        <span><%=u.username%></span>
-                                    </p>
-                                    <p class="main_message">
-                                        <span>Hello world</span>
+                                        <span><%=u.userGet.username%></span>
                                     </p>
                                 </div>
                             </a>     
@@ -155,6 +156,17 @@
                         </div></a>
                     </div>
                     <div class="message_body">
+                        <%messageSend.forEach(mess=>{%>
+                            <%if(mess.userSend == user.id){%>
+                                <div class="user_send">
+                                    <p class="send"><%=mess.message%></p>
+                                </div>    
+                                <%}else{%>
+                                    <div class="user_get">
+                                        <p class="get"><%=mess.message%></p>
+                                    </div>    
+                                <%}%> 
+                        <%})%>
                     </div>
                     <form id="send-container">
                         <input type="text" id="message-input">
@@ -168,6 +180,7 @@
     <script>
         let userSend = '<%=user._id%>' 
         let userGet = '<%=userChat.id%>';
+        
     </script>
     <script src="/script/socketHandle.js"></script>
 <%-include('../partials/footer.ejs')%>
