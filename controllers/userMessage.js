@@ -13,11 +13,9 @@ class messageController{
     async sendmessage_get(req,res){  
         let userId = req.params.id;
         let userSend = res.locals.user.id;
-        console.log(userSend);
         let listMess = await listMessage.getChatList(userSend);
         let messageSend = await Message.getSpecificChat(userSend,userId);
         let currUser = await Account.findById(userId)
-        console.log('this is Sending: ',messageSend);
         res.render('SocialMedia/messageb',{users:listMess,userChat:currUser,messageSend:messageSend});
     }
     async getMessageByIdGet(id){
@@ -29,7 +27,6 @@ class messageController{
             let {userSend,userGet} = req.body;
             console.log({userSend,userGet});
             let check = await listMessage.findOne({userSend,userGet});
-            console.log(check);
             if(!check || check == null){
                 let user = await listMessage.create({userSend,userGet});
                 res.json({success:user.userGet});

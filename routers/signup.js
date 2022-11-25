@@ -10,6 +10,8 @@ router.get('/facebook', passport.authenticate('facebook',{scope:'email'}));
 router.get('/facebook/callback',user.facebookLoggin);
 router.get('/google',passport.authenticate('google',{scope: ['profile', 'email']}));
 router.get('/google/callback',user.googleLoggin);
+router.get('/change/:id',user.changePassword_get);
+router.post('/change',user.changePassword_post);
 router.post('/sendmail',user.sendEmail_post);
 router.post('/login',user.login_post);
 router.post('/register',user.register_post);

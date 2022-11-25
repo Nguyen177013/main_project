@@ -11,6 +11,7 @@ const social = require('./socialMedia');
 const message=  require('./message');
 const user = require('./user')
 const purchage = require('./purchage');
+const payment = require('./payment');
 module.exports = {
     home,
     character,
@@ -24,5 +25,6 @@ module.exports = {
     social,
     user,
     message,
-    purchage
+    purchage,
+    payment
 };

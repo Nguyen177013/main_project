@@ -12,5 +12,9 @@ const purchageSchema = new mongoose.Schema({
     expireAt: {type: Date, default: (Date.now()+7776000000)}
 });
 purchageSchema.index({ expireAt: 1 }, {  expireAfterSeconds: 0  });
+purchageSchema.statics.findUser = async function(id){
+    let check = await this.findOne({user:id});
+    return check;
+}
 const purchage  =  mongoose.model('purchage', purchageSchema);
 module.exports = purchage;

@@ -128,7 +128,7 @@
                                         <span><%=u.userGet.username%></span>
                                     </p>
                                     <p class="main_message">
-                                        <span>Hello world</span>
+                                        <span data-user="<%=u.userGet._id%>">offline</span>
                                     </p>
                                 </div>
                             </a>     
@@ -139,4 +139,14 @@
         </div>
     </main>
     <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let user = '<%=user.id%>';
+        socket.emit('user-connected',{user});
+        socket.on('user-connected',data=>{
+        let status = document.querySelector(`[data-user~="${data}"]`);
+        if(status)
+        status.innerText ="online"
+        })
+    </script>
 <%-include('../partials/footer.ejs')%>

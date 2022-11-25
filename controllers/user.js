@@ -55,8 +55,6 @@ class userController {
         try {
             const user = await Account.login(username, password);
             const token = createToken(user._id);
-            console.log(user);
-            console.log('this is token', token);
             res.cookie('user', token, { httpOnly: true, maxAge: maxAge * 1000 });
             res.status(201).json({ user: user.username });
         }
@@ -74,7 +72,6 @@ class userController {
             try{
                 let checkFacebookId = await Account.findOne({fId:facebookId});
                 if(!checkFacebookId){
-                    // console.log({facebookId,facebookEmail,facebookImage,facebookName});
                     const Facebookuser = await Account.create({username:facebookName, email:facebookEmail,password:'thisissecret',image:{img_url:facebookImage,id:'facebook'},fId:facebookId});
                     const token = createToken(user._id);
                     res.cookie('user', token, { httpOnly: true, maxAge: maxAge * 1000 });
@@ -151,7 +148,10 @@ class userController {
             to: `${email}`, // list of receivers
             subject: "Forgot Password", // Subject line
             // text: "We've receive the request that you've forgotten your password", // plain text body
-            html: "<h4>We've receive the request that you've forgotten your password</h4><p>Click here to type the new one</p>", // html body
+            html: `<h2>Hello ${user.username}</h2><p>We've received the request that you've forgotten your password</p>
+            <p>
+            <a href="http://localhost:3000/signup/change/${user.id}">Click here</a> to change your passworkd
+            </p>`, // html body
           };
           await transporter.sendMail(msg, function (err, success) {
             if (err) console.log(err);
@@ -163,6 +163,21 @@ class userController {
             res.status(401).json({err});
         }
       };
+    async changePassword_get(req,res){
+        let userId = req.params.id;
+        let user = await Account.findById(userId);
+        res.render('Login/changepass',{user});
+    }  
+    async changePassword_post(req,res){
+        try{
+            let {id,password} = req.body;
+            let user = await Account.findByIdAndUpdate(id,{password:password});
+            res.json({success:1});
+        }
+        catch(ex){
+            res.json({fail:1});
+        }
+    }
     async getUser(req,res){
         let userId = req.params.id;
         let [user,figure] = await Promise.all([Account.findById(userId),Posts.find({user:mongoose.Types.ObjectId(userId)}).populate('user').sort({_id:-1})]);

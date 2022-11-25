@@ -102,30 +102,24 @@
                     </div>
                 </div>
             </section>
+            <%if(displayPost.length>0){%>
             <section class="detail">
                 <div>
                     <h2 class="title_menu">Comunity Images</h2>
                     <div class="content">
                         <div class="handle_img">
-                            <div class="showcase_img">
-                                <img src="/imgs/userImgs/2786036.jpeg" alt="">
-                            </div>
-                            <div class="showcase_img">
-                                <img src="/imgs/userImgs/3191548.jpeg" alt="">
-                            </div>
-                            <div class="showcase_img">
-                                <img src="/imgs/userImgs/3302247.jpeg" alt="">
-                            </div>
-                            <div class="showcase_img">
-                                <img src="/imgs/userImgs/3302267.jpeg" alt="">
-                            </div>
-                            <div class="showcase_img">
-                                <img src="/imgs/userImgs/3303517.jpeg" alt="">
-                            </div>
+                            <%displayPost.forEach(userPost=>{%>
+                                <div class="showcase_img">
+                                    <a href="/">
+                                        <img src="<%=userPost.image%>" alt="">
+                                    </a>
+                                </div>
+                            <%})%>
                         </div>
                     </div>
                 </div>
             </section>
+            <%}%>
             <section class="detail">
                 <div>
                     <h2 class="title_menu">Comment</h2>
@@ -256,10 +250,9 @@
             })
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                // let comments = document.querySelector('.coments');
                 let title = CKEDITOR.instances.myTextarea.getData();
                 socket.emit('comments',{figure,user,title});
-                // CKEDITOR.instances.myTextarea.setData('');
+                CKEDITOR.instances.myTextarea.setData('');
             });
             socket.on('comments',data=>{
                 handleComment(data);

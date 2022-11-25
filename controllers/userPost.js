@@ -3,39 +3,54 @@ const Post = require('../models/socialMedia');
 const Character = require('../models/Characters');
 const cloudinary = require('./cloudinary');
 const message = require('../models/message');
-const moment = require("moment");
-class postController{
-    async index(req,res){
-        let [charData, posts] = await Promise.all([Character.find(),Post.find().populate('user').sort({_id: -1})]);
-        res.render('SocialMedia/index',{characters:charData,posts:posts,moment:moment});
-    }
-    async post(req,res){
-        let {body,img,origin,Character} = req.body;
-        let dataImg = [];
-        try{
-            let userId =req.data.id
-            let data = {user:userId,origin:origin,character:Character,title:body};
-            for(let ele of req.files){
-                const result = await cloudinary.v2.uploader.upload(ele.path,{folder: `/User_Figures/${userId}`});
-                dataImg.push({url:result.secure_url,id:result.public_id});
-            }
-            if(dataImg.length>0)
-                data['images'] = dataImg;
-                let result = await Post.create(data);
-                res.redirect('/figure-wiki');
+const mongoose = require('mongoose');
+const purchage = require('../models/purchage');
+const postFavorate = require('../models/postFavorate');
+const listComment = require('../models/commentPost');
+const { postsComment } = require('./comment');
+class postController {
+    async index(req, res) {
+        let userId = res.locals.user.id;
+        let [charData, posts, check, dataNum] = await Promise.all([Character.find(), Post.find().populate('user').sort({ _id: -1 }), purchage.findUser(userId), postFavorate.totalFavorate()]);
+        for(let ele of posts) {
+            dataNum.some(value => {
+                if (value._id == ele.id) {
+                    ele['favorate'] = value.count;
+                }
+            });
+            console.log(await listComment.find({post:ele.id}).limit(5).populate('user'));
+            ele['comments'] = await listComment.find({post:ele.id}).limit(5).populate('user');
         }
-        catch(ex){
+        res.render('SocialMedia/index', { characters: charData, posts: posts, check, dataNum: dataNum });
+    }
+    async post(req, res) {
+        let { body, origin, Character, privacy } = req.body;
+        let dataImg = [];
+        try {
+            let userId = req.data.id
+            let data = { user: userId, origin: origin, character: Character, title: body, privacy };
+            for (let ele of req.files) {
+                const result = await cloudinary.v2.uploader.upload(ele.path, { folder: `/User_Figures/${userId}` });
+                dataImg.push({ url: result.secure_url, id: result.public_id });
+            }
+            if (dataImg.length > 0)
+                data['images'] = dataImg;
+            let result = await Post.create(data);
+            res.redirect('/figure-wiki');
+        }
+        catch (ex) {
             console.log(ex.message);
         }
     }
-    async remove(req,res){
-        try{
+    async remove(req, res) {
+        try {
             let postId = req.body.postId;
-            let post = await Post.findOne({_id:postId});
+            let post = await Post.findOne({ _id: postId });
             post.remove();
-            res.json({success:true})
+            await listComment.deleteMany({post: postId});
+            res.json({ success: true })
         }
-        catch(ex){
+        catch (ex) {
             console.log(ex.message);
         }
     }

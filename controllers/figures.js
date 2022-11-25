@@ -1,4 +1,5 @@
 const Figure = require('../models/Figure');
+const postFavorate = require('../models/postFavorate');
 const Artist = require('../models/artists');
 const Categories = require('../models/Categories');
 const Characters = require('../models/Characters');
@@ -35,8 +36,16 @@ class FigureController{
         const total = Favorate.totalFavorate(fig_id);
         let comments = Comment.getAllComment(fig_id);
         let check = Favorate.checkUser(userId,fig_id);
-        const [a,b,c,d,e] = await Promise.all([figure,views,total,comments,check]);
-        res.render('Home/detail',{title:"detail",figure:a,views:b,favorate:c,comments:d,check:e});
+        let favorate = postFavorate.totalFavorate();
+        const [a,b,c,d,e,f] = await Promise.all([figure,views,total,comments,check,favorate]);
+        let displayPost =[];
+        f.filter(value=>{
+            value.figure.filter(fig=>{
+                if(JSON.stringify(fig.character[0]).includes(fig_id))
+                displayPost.push({image:fig.images[0].url,postId:fig._id});
+            })
+        });
+        res.render('Home/detail',{title:"detail",figure:a,views:b,favorate:c,comments:d,check:e,displayPost});
     }
     async itemFigure(req,res){
         const figure = await Figure.find();
@@ -50,10 +59,8 @@ class FigureController{
     async findNav(req,res){
         try{
             let searchName = req.body.name;
-            console.log(searchName);
             if(searchName){
                 const figure = await Figure.find({name:{'$regex':searchName,$options: 'is'}}).populate('origin');
-            console.log(figure);
             res.json({figures:figure});
         }
         else

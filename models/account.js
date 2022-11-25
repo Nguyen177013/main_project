@@ -40,6 +40,11 @@ AccountSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
     next();
 })
+AccountSchema.pre('findOneAndUpdate', async function (next) {
+    const salt = await bcrypt.genSalt();
+    this._update.password = await bcrypt.hash( this._update.password, salt)
+    next();
+})
 AccountSchema.statics.login = function (username, password) {
     let data = this.findOne({
         username: username,

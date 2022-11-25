@@ -25,14 +25,37 @@ const mediaPostsSchema = new mongoose.Schema({
         required:true,
         ref:"characters"
     },
+    privacy:{
+        type:Boolean,
+        default: false
+    }
 });
-
 mediaPostsSchema.post('remove', async function () {
     console.log('success removed');
     this.images.forEach(async image=>{
         console.log(image);
         await cloudinary.uploader.destroy(image.id);
     })
-})
+});
+mediaPostsSchema.statics.index = async function(){
+    const list = this.aggregate([
+        {
+            '$group': {
+              '_id': '$post', 
+              'count': {
+                '$sum': 1
+              }
+            }
+          }, {
+            '$lookup': {
+              'from': 'userposts', 
+              'localField': '_id', 
+              'foreignField': '_id', 
+              'as': 'post'
+            }
+          }
+    ]);
+    return list;
+}
 const mediaPosts  =  mongoose.model('userPost', mediaPostsSchema);
 module.exports = mediaPosts;

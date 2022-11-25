@@ -45,8 +45,13 @@ app.get('/', (req, res) => {
 // handle socket.io
 let user ={};
 io.on('connection', socket=>{
+    socket.on('user-connected',data=>{
+        user[data.user] = socket.id;
+        io.sockets.emit('user-connected',data.user);
+    })
     socket.on('user_rep',(data)=>{
-        io.sockets.in(data.figure).emit('user_rep',`user ${data.user} has joined`);
+        socket.join(data.figure);
+        io.sockets.to(data.figure).emit('user_rep',`user ${data.user} has joined`);
     })
     socket.on('user_mess',data=>{
         user[data.userSend] = socket.id;
@@ -56,8 +61,9 @@ io.on('connection', socket=>{
         io.sockets.to(user[data.userGet]).emit('messenger',data);
     })
     socket.on('comments',async (data)=>{
+        console.log(data);
         let comment = await socketHandler.addCommentFig(data.user,data.figure,data.title);
-        io.sockets.in(data.figure).emit('comments',comment);
+        io.sockets.to(data.figure).emit('comments',comment);
     })
 })
 
@@ -76,7 +82,7 @@ app.use('/figure-wiki',router.social);
 app.use('/user',router.user);
 app.use('/message',router.message);
 app.use('/purchage',router.purchage);
-// console.log(new Date(Date.now() + 1000));
+app.use('/payment',router.payment);
 app.use('*',(req,res)=>{
     res.render('404/404');
 })
