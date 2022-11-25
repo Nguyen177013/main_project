@@ -187,7 +187,6 @@ class userController {
         try{
         let userId = req.params.id;
         let file = req.file;
-        console.log(file.path);
         const user = await Account.findById(userId);
         if(user.image.id){
             await cloudinary.uploader.destroy(user.image.id);

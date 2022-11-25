@@ -4,7 +4,7 @@ const path = require('path');
         storage:multer.diskStorage({}),
         fileFilter:(req,file,cb)=>{
             let ext = path.extname(file.originalname);
-            if(ext !==".jpg" && ext !==".jpeg" && ext !==".png"){
+            if(ext !==".jpg" && ext !==".jpeg" && ext !==".png"&& ext !==".PNG"&& ext !==".jfif" ){
                 cb(null,false);
                 return;
             }

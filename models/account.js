@@ -42,6 +42,7 @@ AccountSchema.pre('save', async function (next) {
 })
 AccountSchema.pre('findOneAndUpdate', async function (next) {
     const salt = await bcrypt.genSalt();
+    if(this._update.password)
     this._update.password = await bcrypt.hash( this._update.password, salt)
     next();
 })
