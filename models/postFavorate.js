@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const posts = require('./userpost');
 const favorate = new mongoose.Schema({
     post:{
         type:mongoose.SchemaTypes.ObjectId,
         required:true,
-        ref:'userpost'
+        ref:'userPost'
     },
     user:{
         type:mongoose.SchemaTypes.ObjectId,

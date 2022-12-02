@@ -1,7 +1,16 @@
 ::-webkit-scrollbar {
     width: 10px;
   }
-  
+  .vip-status{
+    margin-left: 10px;
+    background-color: #e0d516;
+    border-radius: 5px;
+    padding: 2px 8px;
+  }
+  .vip-status p{
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1; 

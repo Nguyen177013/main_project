@@ -1,5 +1,5 @@
 const Account = require('../models/account');
-const Posts = require('../models/socialMedia');
+const Posts = require('../models/userpost');
 const mongoose = require('mongoose');
 const handleError = require('../middleware/handleError');
 const jwt = require('jsonwebtoken');

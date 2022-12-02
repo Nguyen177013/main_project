@@ -18,12 +18,12 @@ const mediaPostsSchema = new mongoose.Schema({
     origin:{
         type:mongoose.SchemaTypes.ObjectId,
         required:true,
-        ref:"origins"
+        ref:"characters"
     },
     character:{
-        type:[mongoose.SchemaTypes.ObjectId],
+        type:mongoose.SchemaTypes.ObjectId,
         required:true,
-        ref:"characters"
+        ref:"figures"
     },
     privacy:{
         type:Boolean,

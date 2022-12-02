@@ -2,12 +2,16 @@
     <link rel="stylesheet" href="../style/social.css">
     <%-include('../partials/nav.ejs')%>
         <main>
+            <div class="loading">
+                <div class="lds-dual-ring"></div>
+            </div>
             <div class="social_media">
                 <%-include('../partials/user_option.ejs')%>
                 <div class="poster">
                     <div class="contain">
                         <div class="user_post">
-                            <form action="/figure-wiki/post" method="POST" enctype="multipart/form-data">
+                            <form action="/figure-wiki/post" method="POST" enctype="multipart/form-data"
+                            onsubmit="loading();">
                                 <div class="form_post">
                                     <div class="option_img user_img">
                                         <%if(user.image.img_url){%>
@@ -262,7 +266,7 @@
                                                 <%post.images.forEach(image=>{%>
                                                     <div class="user_imgs">
                                                         <img src="<%=image.url%>"
-                                                            alt="">
+                                                            alt="" loading="lazy">
                                                     </div>
                                                 <%})%>
                                             </div>
@@ -338,6 +342,10 @@
         </main>
         <script src="/socket.io/socket.io.js"></script>
         <script>
+            let load = document.querySelector('.loading');
+            function loading(){
+                load.style.display = 'flex';
+            }
             let userId = '<%=user.id%>';
             let favorate_btn = document.querySelectorAll('.favorate_btn svg');
             favorate_btn.forEach((ele)=>{

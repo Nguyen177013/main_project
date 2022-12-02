@@ -6,7 +6,7 @@ const character = mongoose.Schema({
     origin:{
         type:mongoose.SchemaTypes.ObjectId,
         required:true,
-        ref:"origins"
+        ref:"origin"
     },
 })
 const characterSchema = mongoose.model('characters',character);

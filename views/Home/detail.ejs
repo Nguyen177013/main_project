@@ -111,7 +111,7 @@
                             <%displayPost.forEach(userPost=>{%>
                                 <div class="showcase_img">
                                     <a href="/">
-                                        <img src="<%=userPost.image%>" alt="">
+                                        <img src="<%=userPost%>" alt="" loading="lazy">
                                     </a>
                                 </div>
                             <%})%>
@@ -141,7 +141,7 @@
                                     <a href="/user/<%=comment.user._id%>" class="user">
                                         <%if(comment.user.image.img_url){%>
                                             <img src="<%=comment.user.image.img_url%>"
-                                                alt="">
+                                                alt="" loading="lazy">
                                         <%}else{%>
                                             <img src="/detail/unknow.png" alt="">
                                         <%}%>
@@ -250,9 +250,12 @@
             })
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                let title = CKEDITOR.instances.myTextarea.getData();
-                socket.emit('comments',{figure,user,title});
-                CKEDITOR.instances.myTextarea.setData('');
+                if(!user || user==null || user == ''){
+                    return window.location.href = '/signup/login'
+                }
+                    let title = CKEDITOR.instances.myTextarea.getData();
+                    socket.emit('comments',{figure,user,title});
+                    CKEDITOR.instances.myTextarea.setData('');
             });
             socket.on('comments',data=>{
                 handleComment(data);

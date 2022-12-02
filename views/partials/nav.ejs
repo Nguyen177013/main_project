@@ -44,12 +44,7 @@
         <div class="header_logo"><a href="/">Figure <span>Database</span></a></div>
         <div class="header_menu">
             <div class="nav_menu">
-                <a>Database</a>
-                <div class="sub_nav">
-                    <a href="">Activity</a>
-                    <a href="">Top 100</a>
-                    <a href="">Goods</a>
-                </div>
+                <a href="">Top 100</a>
             </div>
             <div class="nav_menu">
                 <a href="/figure-wiki/">Community</a>
@@ -99,6 +94,11 @@
                                 <%=user.username%>
                             </a>
                         </div>
+                        <%if(user.vip){%>
+                            <div class="vip-status">
+                                <p>VIP</p>
+                            </div>
+                        <%}%>
                     </div>
                     <div class="user_logout">
                         <div class="logout_btn">

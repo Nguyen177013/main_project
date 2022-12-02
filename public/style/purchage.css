@@ -1,5 +1,7 @@
 body{
     gap: 24px;
+    animation-name: lift-up;
+    animation-duration: 1s;
 }.purchage{
     background-color: #fff;
     width: 22rem;
@@ -29,6 +31,11 @@ body{
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: .2s;
+}
+.purchage button:hover{
+    padding: 15px 25px;
+    font-weight: 600;
 }
 .pro{
     background-color: rgb(228, 204, 46) !important;

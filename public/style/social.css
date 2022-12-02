@@ -193,7 +193,35 @@ header .container::before {
     width: 100%;
     margin: 30px 0px;
 }
-
+.loading{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    animation: modalFadeIn ease 0.8s;
+    z-index: 4;
+}
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #0cbcdf transparent #dd720e transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
 .option_item {
     text-decoration: none;
     color: #fff;

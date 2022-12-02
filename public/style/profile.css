@@ -27,6 +27,7 @@
     height: 100%;
     margin-top: -25px;
     border-radius: 50%;
+    border: 0.5px solid;
 }
 #change{
     display: none;
@@ -66,7 +67,6 @@ label{
     display: flex;
 }
 .user_name{
-    margin-top: 10px;
     text-align: center;
 }
 .user_name h2{
@@ -74,6 +74,13 @@ label{
 }
 .user_posts{
     margin: 30px 10px;
+}
+.vip-expire{
+    display: inline-block;
+}
+.target{
+    color: #d54510;
+    margin-left: 5px;
 }
 .user_imgs{
     width: 12rem;

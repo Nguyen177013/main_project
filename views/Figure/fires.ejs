@@ -6,7 +6,7 @@
         <div class="container list_info">
             <div class="detail_fig">
                 <div class="fig_info">
-                    <h2>LATEST ADDITIONS</h2>
+                    <h2>Items on fire</h2>
                 </div>
             </div>
         </div>
@@ -17,14 +17,14 @@
                 <%latest.forEach(figure=>{%>
                 <div class="figure_detail">
                     <a href="/figure/<%=figure._id%>">
-                        <%if(figure?.images){%>
-                            <img src="<%=figure.images[0]%>" alt="">
+                        <%if(figure.figure[0]?.images[0]){%>
+                            <img src="<%=figure.figure[0].images[0]%>" alt="">
                         <%}else{%>
                             <img src="/imgs/detail/empty.png" alt="">
                         <%}%>
                     </a>
                     <h5 class="about_figure">
-                        <%=figure.name%>
+                        <%=figure.figure[0].name%>
                     </h5>
                 </div>
             <%})%>
@@ -40,6 +40,6 @@
 </script>
 <script src="/script/pagination.js"></script>
 <script>
-    pagination();
+    pagination('fires');
 </script>
 <%-include('../partials/footer.ejs')%>

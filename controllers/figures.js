@@ -1,30 +1,53 @@
 const Figure = require('../models/Figure');
-const postFavorate = require('../models/postFavorate');
-const Artist = require('../models/artists');
-const Categories = require('../models/Categories');
-const Characters = require('../models/Characters');
-const Companies = require('../models/Companys');
-const Materials = require('../models/materials');
-const Origins = require('../models/Origins');
+// const postFavorate = require('../models/postFavorate');
+// const Artist = require('../models/artists');
+// const Categories = require('../models/Categories');
+// const Characters = require('../models/Characters');
+// const Companies = require('../models/Companys');
+// const Materials = require('../models/materials');
+// const Origins = require('../models/origin');
 const Views = require('../models/userView');
-const Comment = require('../controllers/comment');
 const Favorate = require('./favorate');
+const Comment = require('../controllers/comment');
+const Post = require('../models/userpost');
 const thisDate = new Date();
 class FigureController{
     async index (req,res){
-        let thisMonth = thisDate.getMonth()+1;
-        let thisYear = thisDate.getFullYear();
-        const latest = Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
-        let [late,topView,month] = await Promise.all([latest,Views.sortView(),Figure.getByMonth(thisMonth,thisYear)]);
-        res.render('Home/index',{figures:late,months:month,views:topView});
-    }
-    async latest_fig(req,res){
-        const figPerPage = 5
+        try{
+            let thisMonth = thisDate.getMonth()+1;
+            let thisYear = thisDate.getFullYear();
+            const latest = Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
+            let [late,topView,month] = await Promise.all([latest,Views.sortView(),Figure.getByMonth(thisMonth,thisYear,0,6)]);
+            res.render('Home/index',{figures:late,months:month,views:topView});
+            }
+            catch(ex){
+                console.log(ex.message);
+            }
+        }
+        async latest_fig(req,res){
+        const figPerPage = 15;
         const length = await Figure.find().count();
         const page = req.params.p-1;
         const latest = await Figure.find().populate('category').populate('artists').populate('character')
         .sort({_id: -1}).skip(figPerPage * page).limit(figPerPage);
         res.render('Figure/latest',{length,page,latest:latest});
+    }
+    async figThismonth(req,res){
+        let thisMonth = thisDate.getMonth()+1;
+        let thisYear = thisDate.getFullYear(); 
+        const page = req.params.p-1;
+        const limit = 15;
+        let length = await Figure.getByMonth(thisMonth,thisYear,0,0);
+        let data = await Figure.getByMonth(thisMonth,thisYear,page,limit);
+        res.render('Figure/months',{length:length.length,page,latest:data});
+    }
+    async topview(req,res){
+        const page = req.params.p-1;
+        const limit = 15;
+        const data = await Views.sortView(page,limit);
+        const length = await Views.sortView(0,0);
+        console.log(length);
+        res.render('Figure/fires',{length:length.length,page,latest:data});
     }
     async figure_detail(req,res){
         const fig_id = req.params.id;
@@ -36,15 +59,12 @@ class FigureController{
         const total = Favorate.totalFavorate(fig_id);
         let comments = Comment.getAllComment(fig_id);
         let check = Favorate.checkUser(userId,fig_id);
-        let favorate = postFavorate.totalFavorate();
-        const [a,b,c,d,e,f] = await Promise.all([figure,views,total,comments,check,favorate]);
+        let involve = Post.find({character:fig_id});
+        const [a,b,c,d,e,f] = await Promise.all([figure,views,total,comments,check,involve]);
         let displayPost =[];
-        f.filter(value=>{
-            value.figure.filter(fig=>{
-                if(JSON.stringify(fig.character[0]).includes(fig_id))
-                displayPost.push({image:fig.images[0].url,postId:fig._id});
-            })
-        });
+        f.map(ele=>{
+            return displayPost.push(ele.images[0].url);
+        })
         res.render('Home/detail',{title:"detail",figure:a,views:b,favorate:c,comments:d,check:e,displayPost});
     }
     async itemFigure(req,res){

@@ -1,9 +1,9 @@
 let delete_btn = document.querySelectorAll('.option_btn');
 let user_post = document.querySelectorAll('.list_posts .user_post');
-delete_btn.forEach((ele,index)=>{
+delete_btn.forEach((ele)=>{
     ele.addEventListener('click',async function(e){
         let target = e.target;
-        let postId = user_post[index].dataset.id;
+        let postId = target.parentNode.parentNode.parentNode.parentNode.parentNode.dataset.id;
         let req = await fetch('/figure-wiki/remove',{
             method:'POST',
             body: JSON.stringify({postId}),

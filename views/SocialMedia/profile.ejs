@@ -36,7 +36,7 @@
                             <h2><%=userd.username%></h2>
                         </div>
                         <div class="user_name">
-                            <p><%=moment(userd.dateCreate).format('Do MMMM, YYYY')%></p>
+                            <p>Joined in <%=moment(userd.dateCreate).format('Do MMMM YYYY')%></p>
                         </div>
                         <%if(userd._id!=user.id){%>
                         <div class="btnOption">
@@ -47,6 +47,10 @@
                                 <a>Message</a>
                             </div>
                         </div>
+                        <%}else if(user.vip){%>
+                            <div class="user_name">
+                               <strong class="vip-expire">VIP expire in:<p class="vip-expire target"><%=new Date(user.vip.expireAt).toDateString()%></p></strong>
+                            </div>
                         <%}%>
 
                     </div>

@@ -60,7 +60,7 @@
                         </a>
                     <%})%>
                     <%if(months.length>=5){%>
-                        <a href="" class="more" >
+                        <a href="/figure/month/1" class="more" >
                             <h3>View More</h3>
                         </a>
                     <%}%>
@@ -68,27 +68,29 @@
             </div>
         </section>
         <%}%>
+        <%if(views.length>0){%>
         <section>
             <div class="container reveal">
                 <h2>Items on Fire</h2>
                 <div class="cards">
                     <%views.forEach(view=>{%>
-                        <a href="/figure/<%=view._id%>" class="text-card" style="background-image: url('<%=view.figure[0].images[0]%>');background-size: cover;
+                        <a href="/figure/<%=view._id%>" class="text-card" style="background-image: url('<%=view.figure[0]?.images[0]%>');background-size: cover;
                         background-repeat: no-repeat;">
                             <div class="about_fig">
                                 <h3>Title</h3>
-                                <p><%=view.figure[0].name%></p>
+                                <p><%=view.figure[0]?.name%></p>
                                  </div>
                         </a>
                     <%})%>
                     <%if(views.length>=5){%>
-                        <a href="" class="more" >
+                        <a href="/figure/fires/1" class="more" >
                             <h3>View More</h3>
                         </a>
                     <%}%>
                 </div>
             </div>
         </section>
+        <%}%>
     </main>
     </script>
     <%-include('../partials/footer_main.ejs')%>

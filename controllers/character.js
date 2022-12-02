@@ -1,6 +1,6 @@
 const character = require('../models/Characters');
 const figure = require('../models/Figure');
-const origins = require('../models/Origins')
+const origins = require('../models/origin')
 const company = require('../models/Companys');
 const mongoose = require('mongoose');
 const companyController = require('../controllers/company')

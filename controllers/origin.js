@@ -1,4 +1,4 @@
-const origins = require('../models/Origins');
+const origins = require('../models/origin');
 const figure = require('../models/Figure');
 const mongoose = require('mongoose');
 const company = require('../models/Companys');

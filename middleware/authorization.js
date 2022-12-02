@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/account');
+const vipstagement = require('../models/purchage');
 const requireAuth = (req, res, next) => {
   const token = req?.cookies?.user;
   if (token) {
@@ -30,6 +31,8 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
+        let vip = await vipstagement.findOne({user:decodedToken.id}).sort({_id:-1});
+        user['vip'] = vip;
         req.data = user;
         res.locals.user = user;
         next();

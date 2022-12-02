@@ -1,6 +1,6 @@
 const Favorate = require('../models/favorate');
-const favoratePost = require('../models/postFavorate');
 const mongoose = require('mongoose');
+const favoratePost = require('../models/postFavorate');
 class favorateController {
     async totalFavorate(id) {
         let figureId = id;
@@ -8,7 +8,6 @@ class favorateController {
     }
     async getFavorate(id) {
         let figureId = id;
-
         return await Favorate.find({ figure: figureId });
     }
     async checkUser(userId, figId) {
@@ -45,6 +44,9 @@ class favorateController {
             console.log(ex.message);
             res.json({fail:1});
         }
+    }
+    async orderFavorate(req,res){
+        
     }
 }
 module.exports = new favorateController;
