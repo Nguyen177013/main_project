@@ -91,6 +91,24 @@
             </div>
         </section>
         <%}%>
+        <%if(recommends?.length>0){%>
+        <section>
+            <div class="container reveal">
+                <h2>You Might Like</h2>
+                <div class="cards">
+                    <%recommends.forEach(recommend=>{%>
+                        <a href="/figure/<%=recommend.figures._id%>" class="text-card" style="background-image: url('<%=recommend.figures?.images[0]%>');background-size: cover;
+                        background-repeat: no-repeat;">
+                            <div class="about_fig">
+                                <h3>Title</h3>
+                                <p><%=recommend.figures.name%></p>
+                                 </div>
+                        </a>
+                    <%})%>
+                </div>
+            </div>
+        </section>
+        <%}%>
     </main>
     </script>
     <%-include('../partials/footer_main.ejs')%>

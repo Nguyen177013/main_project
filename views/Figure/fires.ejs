@@ -14,17 +14,17 @@
     <section class="detail">
         <div class="content info">
             <div class="figures">
-                <%latest.forEach(figure=>{%>
+                <%latest.forEach(data=>{%>
                 <div class="figure_detail">
-                    <a href="/figure/<%=figure._id%>">
-                        <%if(figure.figure[0]?.images[0]){%>
-                            <img src="<%=figure.figure[0].images[0]%>" alt="">
+                    <a href="/figure/<%=data.figure[0]?._id%>">
+                        <%if(data.figure[0]?.images[0]){%>
+                            <img src="<%=data.figure[0]?.images[0]%>" alt="">
                         <%}else{%>
                             <img src="/imgs/detail/empty.png" alt="">
                         <%}%>
                     </a>
                     <h5 class="about_figure">
-                        <%=figure.figure[0].name%>
+                        <%=data.figure[0]?.name%>
                     </h5>
                 </div>
             <%})%>

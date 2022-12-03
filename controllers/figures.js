@@ -1,24 +1,25 @@
 const Figure = require('../models/Figure');
-// const postFavorate = require('../models/postFavorate');
-// const Artist = require('../models/artists');
-// const Categories = require('../models/Categories');
-// const Characters = require('../models/Characters');
-// const Companies = require('../models/Companys');
-// const Materials = require('../models/materials');
-// const Origins = require('../models/origin');
 const Views = require('../models/userView');
-const Favorate = require('./favorate');
+const favorateController = require('./favorate');
+const favorate = require("../models/favorate");
 const Comment = require('../controllers/comment');
 const Post = require('../models/userpost');
 const thisDate = new Date();
 class FigureController{
     async index (req,res){
         try{
+            let userId = res.locals.user;
+            let recommends = [];
+            if(userId){
+            recommends = await favorate.recommendation(userId.id);
+            }
+            console.log(recommends.length);
             let thisMonth = thisDate.getMonth()+1;
             let thisYear = thisDate.getFullYear();
             const latest = Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);
             let [late,topView,month] = await Promise.all([latest,Views.sortView(),Figure.getByMonth(thisMonth,thisYear,0,6)]);
-            res.render('Home/index',{figures:late,months:month,views:topView});
+
+            res.render('Home/index',{figures:late,months:month,views:topView,recommends:recommends});
             }
             catch(ex){
                 console.log(ex.message);
@@ -46,7 +47,6 @@ class FigureController{
         const limit = 15;
         const data = await Views.sortView(page,limit);
         const length = await Views.sortView(0,0);
-        console.log(length);
         res.render('Figure/fires',{length:length.length,page,latest:data});
     }
     async figure_detail(req,res){
@@ -56,9 +56,9 @@ class FigureController{
         .populate('artists').populate('character')
         .populate('origin').populate('company').populate('materials');
         const views =  Views.find({figure:fig_id}).count();
-        const total = Favorate.totalFavorate(fig_id);
+        const total = favorateController.totalFavorate(fig_id);
         let comments = Comment.getAllComment(fig_id);
-        let check = Favorate.checkUser(userId,fig_id);
+        let check = favorateController.checkUser(userId,fig_id);
         let involve = Post.find({character:fig_id});
         const [a,b,c,d,e,f] = await Promise.all([figure,views,total,comments,check,involve]);
         let displayPost =[];

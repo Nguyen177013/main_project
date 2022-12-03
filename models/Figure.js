@@ -88,5 +88,6 @@ figureSchema.statics.getByMonth = function(month,year,page = 0,limit = 6){
       { '$limit' : limit }]);
       return list_month;
 }
+
 const Figure = mongoose.model('figures',figureSchema);
 module.exports = Figure;
