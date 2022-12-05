@@ -32,6 +32,7 @@ const checkUser = (req, res, next) => {
       } else {
         let user = await User.findById(decodedToken.id);
         let vip = await vipstagement.findOne({user:decodedToken.id}).sort({_id:-1});
+        if(vip)
         user['vip'] = vip;
         req.data = user;
         res.locals.user = user;
