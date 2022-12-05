@@ -22,6 +22,10 @@ const AccountSchema = new Schema({
         required: [true, 'password'],
         minlength: [3, 'valid password']
     },
+    status:{
+        type:Boolean,
+        default: true
+    },
     image: {
         id: String,
         img_url: String
