@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/account');
+const notification = require('../models/notification');
 const vipstagement = require('../models/purchage');
 const requireAuth = (req, res, next) => {
   const token = req?.cookies?.user;
@@ -28,10 +29,14 @@ const checkUser = (req, res, next) => {
       if (err) {
         console.log('Token Trống');
         res.locals.user = null;
+        res.locals.status = null;
         next();
       } else {
-        let user = await User.findById(decodedToken.id);
-        let vip = await vipstagement.findOne({user:decodedToken.id}).sort({_id:-1});
+        let [user, vip,status] = await Promise.all([User.findById(decodedToken.id),vipstagement.findOne({user:decodedToken.id}).sort({_id:-1}),notification.findOne({user:decodedToken.id})]);
+        if(status )
+        res.locals.status = status;
+        else
+        res.locals.status = null;
         if(vip)
         user['vip'] = vip;
         req.data = user;
@@ -41,6 +46,7 @@ const checkUser = (req, res, next) => {
     });
   } else {
     res.locals.user = null;
+    res.locals.status = null;
     next();
   }
 };

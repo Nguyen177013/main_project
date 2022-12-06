@@ -13,7 +13,6 @@ class FigureController{
             if(userId){
             recommends = await favorate.recommendation(userId.id);
             }
-            console.log(recommends.length);
             let thisMonth = thisDate.getMonth()+1;
             let thisYear = thisDate.getFullYear();
             const latest = Figure.find().populate('category').populate('artists').populate('character').sort({_id: -1}).limit(6);

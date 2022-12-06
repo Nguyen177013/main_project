@@ -57,7 +57,24 @@ favorate.statics.recommendation = async function(userId){
         }
       }, {
         '$unwind': '$figures'
-      }, {
+      },
+      {
+        '$group': {
+            '_id': null, 
+            'favorate': {
+                '$addToSet': '$figures._id'
+            }
+        }
+    }, {
+        '$lookup': {
+            'from': 'figures', 
+            'localField': 'favorate', 
+            'foreignField': '_id', 
+            'as': 'figures'
+        }
+    }, {
+        '$unwind': '$figures'
+    }, {
         '$sample': {
           'size': 4
         }
