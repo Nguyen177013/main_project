@@ -34,16 +34,17 @@ class postController {
             }
             if (dataImg.length > 0)
                 data['images'] = dataImg;
-            let result = await Post.create(data);
+            await Post.create(data);
             res.redirect('/figure-wiki');
         }
         catch (ex) {
-            console.log(ex.message);
+            res.redirect('/figure-wiki'); 
         }
     }
     async remove(req, res) {
         try {
             let postId = req.body.postId;
+            await favoratePost.deleteMany({post:postId});
             let post = await Post.findOne({ _id: postId });
             post.remove();
             await listComment.deleteMany({post: postId});
@@ -62,8 +63,12 @@ class postController {
                     ele['favorate'] = value.count;
                 }
             });
-            ele['comments'] = await listComment.find({post:ele.post.id}).limit(5).populate('user');
-        }
+            let comments = await listComment.find({post:ele.post.id}).limit(5).populate('user');
+            if(comments.length > 0) {
+                    ele['comments'] = comments;
+                }
+            }
+            console.log('this is data: ',data[0]);
         res.render('SocialMedia/favorate', {posts: data, dataNum: dataNum });
     }
 }

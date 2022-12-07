@@ -1,11 +1,5 @@
 <script defer src="/script/loginEvent.js"></script>
 <script defer>
-    let html = document.querySelector('html');
-    let body = document.querySelector('body');
-    if("<%=user.status%>"){
-        html.classList.add('disable');
-        body.classList.add('disable');
-    }
     async function find() {
         let find_text = document.querySelector('.find_text');
         let list_data = document.querySelector('.find_data');
@@ -18,23 +12,40 @@
                     headers: { 'Content-Type': 'application/json' }
                 })
                 const data = await req.json();
-                console.log(data);
                 list_data.replaceChildren();
-                data.figures.forEach(figure => {
-                    let list = document.createElement('div');
-                    let html = `
-                    <a href="/figure/${figure._id}">
-                <div class="list_data">
-                            <div class="list_about">
-                                <h4 style="color: #000 !important;">${figure.name}</h4>
-                                <span style="color: #000 !important;"> from ${figure.origin.name}</span>
-                                </div>
-                                </div>
-                                </a>
-                                `;
-                    list.innerHTML = html;
-                    list_data.appendChild(list);
-                })
+                if (data.figures) {
+                    data.figures.forEach(figure => {
+                        let list = document.createElement('div');
+                        let html = `
+                        <a href="/figure/${figure._id}">
+                    <div class="list_data">
+                                <div class="list_about">
+                                    <h4 style="color: #000 !important;">${figure.name}</h4>
+                                    <span style="color: #000 !important;"> from ${figure.origin.name}</span>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    `;
+                        list.innerHTML = html;
+                        list_data.appendChild(list);
+                    })
+                }
+                else if(data.user){
+                    data.user.forEach(acc => {
+                        let list = document.createElement('div');
+                        let html = `
+                        <a href="/user/${acc._id}">
+                    <div class="list_data">
+                                <div class="list_about">
+                                    <h4 style="color: #000 !important;">${acc.username}</h4>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    `;
+                        list.innerHTML = html;
+                        list_data.appendChild(list);
+                    })
+                }
             }
             catch (ex) {
                 console.log(ex.message);
@@ -44,20 +55,20 @@
             list_data.classList.remove('show_list');
         }
     }
-    async function closeModal(user = null){
+    async function closeModal(user = null) {
         let userId = user;
         let req = await fetch('/user/remove_notify', {
-                    method: 'POST',
-                    body: JSON.stringify({id: userId }),
-                    headers: { 'Content-Type': 'application/json' }
-                })
-        let res  = await req.json();
-        if(res){
+            method: 'POST',
+            body: JSON.stringify({ id: userId }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        let res = await req.json();
+        if (res) {
             html.classList.remove('disable');
             body.classList.remove('disable');
-            let modal  = document.querySelector('.modal');
+            let modal = document.querySelector('.modal');
             modal.style.display = "none";
-        } 
+        }
     }
 </script>
 <header>
@@ -65,30 +76,30 @@
         <div class="header_logo"><a href="/">Figure <span>Database</span></a></div>
         <div class="header_menu">
             <div class="nav_menu">
-                <a href="">Top 100</a>
+                <a href="/figure/favorate">Favorate</a>
             </div>
-            <%if(user || user == null){%>
+            <%if(user || user==null){%>
                 <%if(user?.status){%>
                     <div class="nav_menu">
                         <a href="/figure-wiki/">Community</a>
-                        </div>
+                    </div>
                     <%}%>
-                <%}%>
-            <div class="nav_menu">
-                <a>More</a>
-                <div class="sub_nav">
-                    <a href="/character">Characters</a>
-                    <a href="/artist">Artist</a>
-                </div>
-            </div>
-            <div class="find">
-                <form action="/figure/find">
-                    <input type="text" name="name" placeholder="Find something ..." class="find_text"
-                        onkeydown="find()">
-                </form>
-            </div>
-            <div class="find_data">
-            </div>
+                        <%}%>
+                            <div class="nav_menu">
+                                <a>More</a>
+                                <div class="sub_nav">
+                                    <a href="/character">Characters</a>
+                                    <a href="/artist">Artist</a>
+                                </div>
+                            </div>
+                            <div class="find">
+                                <form action="/figure/find">
+                                    <input type="text" name="name" placeholder="Find something ..." class="find_text"
+                                        onkeydown="find()">
+                                </form>
+                            </div>
+                            <div class="find_data">
+                            </div>
         </div>
         <%if(!user){%>
             <div class="header_login">
@@ -123,7 +134,7 @@
                             <div class="vip-status">
                                 <p>VIP</p>
                             </div>
-                        <%}%>
+                            <%}%>
                     </div>
                     <div class="user_logout">
                         <div class="logout_btn">
@@ -138,14 +149,14 @@
 </header>
 <%if(status){%>
     <div class="modal">
-    <div class="notificate">
-        <div class="body">
-            <h2>You are banned from this community</h2>
-            <p>You are unable to participate the community cause of your ignorant.</p>
-            <p>But you can able to interface the figure colelctions.</p>
-            <p>Best regard Admin :D</p>
+        <div class="notificate">
+            <div class="body">
+                <h2>You are banned from this community</h2>
+                <p>You are unable to participate the community cause of your ignorant.</p>
+                <p>But you can able to interface the figure colelctions.</p>
+                <p>Best regard Admin :D</p>
+            </div>
+            <button class="btn-notify" onclick="closeModal('<%=user.id%>')">I understanded</button>
         </div>
-        <button class="btn-notify" onclick="closeModal('<%=user.id%>')">I understanded</button>
     </div>
-</div>
-<%}%>
+    <%}%>

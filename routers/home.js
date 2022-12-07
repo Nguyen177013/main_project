@@ -7,6 +7,7 @@ router.get('/find',context.findFigure);
 router.get('/items',context.itemFigure);
 router.get('/latest/:p',context.latest_fig);
 router.get('/month/:p',context.figThismonth);
+router.get('/favorate',context.userFavorate);
 router.get('/fires/:p',context.topview);
 router.post('/nav',context.findNav);
 // Get particular item
