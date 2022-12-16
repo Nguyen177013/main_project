@@ -67,8 +67,17 @@ io.on('connection', socket=>{
     })
 })
 
+const cloudinary = require('./controllers/cloudinary');
+const { urlencoded } = require('express');
+const url = [];
 
 // Dinamic Router
+app.get('/video_api', async (req,res)=>{
+    const result = [];
+    let data = await cloudinary.v2.search.expression('folder:video/*').sort_by('public_id','desc').max_results(30).execute();
+    data.resources.forEach(video=>result.push({url:video.url,name:video.filename}));
+    res.json(result);
+});
 app.use('/favorate',router.favorate);
 app.use('/signup', router.signin);
 app.use('/figure', router.home);

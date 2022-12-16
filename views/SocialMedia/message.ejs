@@ -60,9 +60,7 @@
                                     <p class="form_post">
                                         <span><%=u.userGet.username%></span>
                                     </p>
-                                    <p class="main_message">
-                                        <span data-user="<%=u.userGet._id%>">offline</span>
-                                    </p>
+                                    
                                 </div>
                             </a>     
                         <%})%>
@@ -75,8 +73,8 @@
     <script>
         const socket = io();
         let user = '<%=user.id%>';
-        socket.emit('user-connected',{user});
-        socket.on('user-connected',data=>{
+        socket.emit('user-connect',{user});
+        socket.on('user-connect',data=>{
         let status = document.querySelector(`[data-user~="${data}"]`);
         if(status)
         status.innerText ="online"
