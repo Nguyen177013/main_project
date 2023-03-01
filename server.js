@@ -7,12 +7,12 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const port = process.env.PORT || 3000;
-const router = require('./routers/main');
-const connectMongo = require('./db/connectDB');
+const router = require('./src/routers/main');
+const connectMongo = require('./src/db/connectDB');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const {checkUser} = require('./middleware/authorization');
-const socketHandler = require('./middleware/handleSocket');
+const {checkUser} = require('./src/middleware/authorization');
+const socketHandler = require('./src/middleware/handleSocket');
 const passport = require('passport');
 // mongoodb connection
     try {
@@ -32,9 +32,9 @@ app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat', key: 'sid'}));
 app.use(passport.session());
 // Set up static routers
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.static(path.join(__dirname,'public', 'imgs')));
+app.use(express.static(path.join(__dirname,'src', 'public')));
+app.use(express.static(path.join(__dirname,'src', 'views')));
+app.use(express.static(path.join(__dirname,'src','public', 'imgs')));
 // Set up views Engine
 app.set('view engine', 'ejs');
 // Local Router
@@ -67,9 +67,7 @@ io.on('connection', socket=>{
     })
 })
 
-const cloudinary = require('./controllers/cloudinary');
-const { urlencoded } = require('express');
-const url = [];
+const cloudinary = require('./src/controllers/cloudinary');
 
 // Dinamic Router
 app.get('/video_api', async (req,res)=>{
