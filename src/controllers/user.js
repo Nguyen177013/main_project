@@ -65,6 +65,7 @@ class userController {
     }
     facebookLoggin(req,res,next){
         passport.authenticate('facebook', {failureRedirect: '/signup/login' ,failureMessage: true }, async function (err, user, info){
+            console.log("this is user :D : ",user);
             let facebookId = user.id
             let facebookName = user.displayName;
             let facebookEmail = user.emails[0].value;
