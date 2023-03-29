@@ -135,13 +135,13 @@ class userController {
    async sendEmail_post(req, res){
         const { email } = req.body;
         try {
-          const user = await Account.checkMail(email);
+            const user = await Account.checkMail(email);
           // // create reusable transporter object using the default SMTP transport
           let transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
               user: "ngocsieukibo@gmail.com", // generated ethereal user
-              pass: "oclynxhageikuvvm", // generated ethereal password
+              pass: "agtlloqilzewsbtm", // generated ethereal password
             },
           });
           const msg = {
@@ -173,7 +173,8 @@ class userController {
         try{
             let {id,password} = req.body;
             let user = await Account.findByIdAndUpdate(id,{password:password});
-            res.json({success:1});
+            console.log(user);
+            res.redirect("/");
         }
         catch(ex){
             res.json({fail:1});
@@ -188,10 +189,12 @@ class userController {
         try{
         let userId = req.params.id;
         let file = req.file;
+        console.log(file);
         const user = await Account.findById(userId);
         if(user.image.id){
             await cloudinary.uploader.destroy(user.image.id);
         }
+
         const image = await cloudinary.v2.uploader.upload(file.path,{folder: "/User_Ava/"});
         await Account.findByIdAndUpdate(userId,{image:{id:image.public_id,img_url:image.secure_url}});
         res.redirect(`/user/${userId}`);
