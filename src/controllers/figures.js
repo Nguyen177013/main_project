@@ -16,9 +16,10 @@ class FigureController {
             }
             let thisMonth = thisDate.getMonth() + 1;
             let thisYear = thisDate.getFullYear();
+            let test = await Figure.find();
+            console.log(test);
             const latest = Figure.find().populate('category').populate('artists').populate('character').sort({ _id: -1 }).limit(6);
             let [late, topView, month] = await Promise.all([latest, Views.sortView(), Figure.getByMonth(thisMonth, thisYear, 0, 6)]);
-
             res.render('Home/index', { figures: late, months: month, views: topView, recommends: recommends });
         }
         catch (ex) {
@@ -78,7 +79,10 @@ class FigureController {
     }
     async userFavorate(req,res){
         const page = req.params.p - 1;
-        let userId = res.locals.user.id;
+        let userId = res?.locals?.user?.id;
+        if(!userId){
+            res.redirect('/signup/login');
+        }
         const listfavorate = await favorate.find({user:userId}).populate('figure');;
         const length = listfavorate.length;
         console.log(listfavorate);
